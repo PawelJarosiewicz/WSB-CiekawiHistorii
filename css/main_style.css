@@ -1,0 +1,70 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.myNav{
+    background-color: rgb(20, 20, 50);
+}
+.myNavItem:hover{
+    transition: all .5s;
+    border-bottom: 1px solid green;
+}
+.myNavDropdown{
+    margin-top: 5px;
+    background-color: rgb(20, 20, 50);
+    border: 1px solid green;
+}
+.myDopdownItem:hover{
+    transition: all .5s;
+    border-bottom: 1px solid green;
+    background-color: rgb(20, 20, 50);
+    border-radius: 5px;
+}
+.myNavBtnRight{
+    padding-left: 0;
+    text-align: left;
+}
+.inputSearch:focus{
+    box-shadow: none;
+}
+.myBtnSearch{
+    background-color: lightgray;
+}
+.myBtnSearch:hover{
+    background-color: rgb(40, 40, 100);
+    transition: all .5s;
+    color: green;
+}
+.myIconSearch:hover{
+    color: green;
+}
+#btnLogIn:hover{
+    background-color: rgb(40, 40, 100);
+    border-radius: 5px;
+    transition: all .5s;
+}
+
+@media only screen and (max-width:800px) and (min-width:767px){
+    .inputSearch{
+        max-width: 150px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 321px){
+    .myNavItem{
+        width: 50%;
+    }
+    .myNavItem:hover{
+        margin-bottom: 5px;
+    }
+}
+
+@media only screen and (max-width:320px){
+    .myNavItem{
+        width: 75%;
+    }
+    .myNavItem:hover{
+        margin-bottom: 5px;
+    }
+}
