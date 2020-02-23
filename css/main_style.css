@@ -1,25 +1,37 @@
 body{
     margin: 0;
     padding: 0;
+    font-family: 'Noto Serif',Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
+    /* background-color: rgb(249,239,215); */
+    /* https://hexcolor.co/hex/eae0c8 */
+    background-color: rgb(234,224,200);
 }
 
 .myNav{
     background-color: rgb(20, 20, 50);
+    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
 }
 .myNavItem:hover{
-    transition: all .5s;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid rgb(0, 128, 0);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 .myNavDropdown{
     margin-top: 5px;
     background-color: rgb(20, 20, 50);
-    border: 1px solid green;
+    border: 1px solid rgb(0, 128, 0);
 }
 .myDopdownItem:hover{
-    transition: all .5s;
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid rgb(0, 128, 0);
     background-color: rgb(20, 20, 50);
     border-radius: 5px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 .myNavBtnRight{
     padding-left: 0;
@@ -33,24 +45,84 @@ body{
 }
 .myBtnSearch:hover{
     background-color: rgb(40, 40, 100);
-    transition: all .5s;
-    color: green;
+    color: rgb(0, 128, 0);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 .myIconSearch:hover{
-    color: green;
+    color: rgb(0, 128, 0);
 }
 #btnLogIn:hover{
     background-color: rgb(40, 40, 100);
     border-radius: 5px;
-    transition: all .5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.mySidebarRight{
+    z-index: 100;
+    position: fixed;
+    right: 250px;
+    margin-right: -250px;
+    width: 250px;
+    margin-top: 3%;
+    height: 70%;
+    overflow-y: auto;
+    border-radius: 10px;
+    background-color: rgb(200,227,234);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.myContainer{
+    padding-left: 3%;
+}
+.mySidebarContent{
+    margin-top: 10%;
+}
+.myFooter{
+    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
 }
 
-@media only screen and (max-width:800px) and (min-width:767px){
+/* duże ekrany */
+@media only screen and (min-width:1200px){
+    .mySidebarRight{
+        width: 300px;
+    }
+    .myContainer{
+        font-size: 1.1em;
+        padding-left: 7%;
+    }
+    .myNav{
+        font-size: 1.2em;
+    }
+    .mySidebarContent{
+        font-size: 1em;
+    }
+}
+/* Laptop -> tablet */
+@media only screen and (max-width:900px) and (min-width:767px){
     .inputSearch{
         max-width: 150px;
     }
+    .myContainer{
+        font-size: 1em;
+    }
+    .myNav{
+        font-size: 1.1em;
+    }
+    .mySidebarContent{
+        font-size: 0.9em;
+    }
+    .myFooter{
+        font-size: 0.9em;
+    }
 }
-
+/* Tablet -> Mobile L,M */
 @media only screen and (max-width: 767px) and (min-width: 321px){
     .myNavItem{
         width: 50%;
@@ -58,13 +130,37 @@ body{
     .myNavItem:hover{
         margin-bottom: 5px;
     }
+    .mySidebarRight{
+        display: none;
+    }
+    .myNav{
+        font-size: 0.9em;
+    }
+    .myContainer{
+        font-size: 0.9em;
+    }
+    .myFooter{
+        font-size: 0.8em;
+    }
 }
-
+/* Mobile S */
 @media only screen and (max-width:320px){
     .myNavItem{
         width: 75%;
     }
     .myNavItem:hover{
         margin-bottom: 5px;
+    }
+    .mySidebarRight{
+        display: none;
+    }
+    .myNav{
+        font-size: 0.9em;
+    }
+    .myContainer{
+        font-size: 0.8em;
+    }
+    .myFooter{
+        font-size: 0.7em;
     }
 }

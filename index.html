@@ -7,38 +7,33 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="/css/main_style.css">
 
     <title>Ciekawi Historii?</title>
   </head>
   <body>
     <!-- menu -->
-    <nav class="navbar navbar-expand-md navbar-light fixed-top myNav">
+    <nav class="navbar navbar-expand-md navbar-light sticky-top myNav">
       <a href="#" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
       <button type="button" class="navbar-toggler bg-light" data-toggle="collapse" data-target="#nav"><span class="navbar-toggler-icon"></span></button>  
       <div class="collapse navbar-collapse justify-content-between" id="nav">
         <ul class="navbar-nav">
-          <!-- first drop down menu -->
-          <li class="nav-item myNavItem dropdown"><a class="nav-link dropdown-toggle text-light font-weight-bold px-3" role="button" data-toggle="dropdown" href="#" id="navDropdown">Epoki</a>
+          <!-- drop down menu -->
+          <li class="nav-item myNavItem dropdown"><a class="nav-link dropdown-toggle text-light px-3" role="button" data-toggle="dropdown" href="#" id="navDropdown">Epoki</a>
             <div class="dropdown-menu myNavDropdown" aria-labelledby="navDropdown">
               <a class="dropdown-item text-light myDopdownItem" href="#">Starożytność</a>
               <a class="dropdown-item text-light myDopdownItem" href="#">Średniowiecze</a>
-              
-              <!-- sub drop down menu -> rezygnacja -->
-              <!-- <div class="btn-group dropdown-item myDopdownItem dropright">
-                <button type="button" class="btn text-light dropdown-toggle myNavBtnRight" data-toggle="dropdown">Nowożytność</button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                </div>
-              </div> -->
               <a class="dropdown-item text-light myDopdownItem" href="#">Nowożytność</a>
               <a class="dropdown-item text-light myDopdownItem" href="#">Czasy współczesne</a>
           </div>
           </li>
-          <!-- end firs drop down menu -->
-          <li class="nav-item myNavItem"><a class="nav-link text-light font-weight-bold px-3" href="#">Dodaj Artykuł</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light font-weight-bold px-3" href="#">O Nas</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light font-weight-bold px-3" href="#">Kontakt</a></li>
+          <!-- end drop down menu -->
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">Dodaj Artykuł</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">O Nas</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">Kontakt</a></li>
         </ul>
         <span class="d-md-flex">
           <form class="form-inline">
@@ -51,10 +46,58 @@
         </form>
         <a href="#" class="nav-link ml-2" id="btnLogIn"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
         </span>
-          
       </div>
     </nav>
     <!-- end menu -->
+
+    <!-- Zawartość strony -->
+    <section>
+      <!-- prawy kontener -->
+      <div class="mySidebarRight container-fluid">
+        <div class="mySidebarContent">
+          <h5 class="font-weight-bolder">Ostatnie artykuły</h5>
+          <div>
+            <h6 class="font-weight-bolder pt-3">Tytuł jakiś tam 1</h6>
+            <p class="font-italic">Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse dolore ipsam adipisci, dignissimos laboriosam repellat natus corrupti iure ducimus obcaecati.</p>
+          </div>
+          <div>
+            <h6 class="font-weight-bolder pt-3">Tytuł kolejny 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, laboriosam?</h6>
+            <p class="font-italic">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro non, incidunt eum magnam quam est iure earum voluptate possimus veritatis?</p>
+          </div>
+          <div>
+            <h6 class="font-weight-bolder pt-3">I ostatni proponowany tytuł</h6>
+            <p class="font-italic">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Illum officiis suscipit possimus nemo iste ratione eligendi minima fugiat iusto quidem.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- O nas -->
+      <div class="container-fluid myContainer">
+        <div class="row">
+            <div class="col-md-8">
+              <h1 class="font-weight-bold pt-5">O nas</h1>
+              <p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque sequi dolore similique pariatur excepturi vel mollitia asperiores ut dolor accusamus quae eum illo, hic quaerat expedita sed quasi minus laudantium iusto beatae vero tempora! Soluta harum, in ducimus est velit ipsam accusantium molestias blanditiis omnis incidunt! Non officia obcaecati, deserunt necessitatibus iusto eum numquam optio? Impedit veritatis exercitationem laborum nobis ipsa, nam ut blanditiis, explicabo nisi, officiis praesentium delectus. Ipsa harum maiores atque sit odit laudantium, cupiditate, quaerat et doloremque sed optio doloribus error molestiae soluta eveniet facere, asperiores accusamus aut tempore neque iusto dolorum dolorem! Quas consectetur mollitia distinctio.</p>
+              <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quidem inventore ex obcaecati quos expedita maxime voluptates! Et, aspernatur vel eaque ipsum assumenda deserunt, inventore, dolorum voluptatum officiis impedit aperiam omnis. Enim fugiat ut modi similique maxime animi. Modi, magnam eaque aspernatur similique facilis eligendi minima ipsum consequuntur quasi corrupti!</p>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="bg-secondary fixed-bottom py-3 myFooter">
+    <div class="container-fluid">
+        <div class="row ">
+            <div class="col-6 text-center">
+              <p class="text-light">&copy 2020 CiekawiHistorii.pl - Made by PJ & JK</p>
+            </div>
+            <div class="col-6 text-center">
+                <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook fa-2x text-primary mx-3"></i></a>
+                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter fa-2x text-info mx-3"></i></a>
+                <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube fa-2x text-danger mx-3"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
