@@ -19,7 +19,7 @@
   <body>
     <!-- menu -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top myNav">
-      <a href="#" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
+      <a href="index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
       <button type="button" class="navbar-toggler bg-light" data-toggle="collapse" data-target="#nav"><span class="navbar-toggler-icon"></span></button>  
       <div class="collapse navbar-collapse justify-content-between" id="nav">
         <ul class="navbar-nav">
@@ -34,8 +34,8 @@
           </li>
           <!-- end drop down menu -->
           <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">Dodaj Artykuł</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">O Nas</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">Kontakt</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="index.html">O Nas</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="contact/">Kontakt</a></li>
         </ul>
         <span class="d-md-flex">
           <form class="form-inline">
@@ -53,7 +53,7 @@
     <!-- end menu -->
 
     <!-- Zawartość strony -->
-    <section>
+    <section class="mainSection">
       <!-- prawy kontener -->
       <div class="mySidebarRight container-fluid">
         <div class="mySidebarContent">
@@ -78,25 +78,38 @@
         <div class="row">
             <div class="col-md-8">
               <h1 class="font-weight-bold pt-5">O nas</h1>
-              <p class="text-justify">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloremque sequi dolore similique pariatur excepturi vel mollitia asperiores ut dolor accusamus quae eum illo, hic quaerat expedita sed quasi minus laudantium iusto beatae vero tempora! Soluta harum, in ducimus est velit ipsam accusantium molestias blanditiis omnis incidunt! Non officia obcaecati, deserunt necessitatibus iusto eum numquam optio? Impedit veritatis exercitationem laborum nobis ipsa, nam ut blanditiis, explicabo nisi, officiis praesentium delectus. Ipsa harum maiores atque sit odit laudantium, cupiditate, quaerat et doloremque sed optio doloribus error molestiae soluta eveniet facere, asperiores accusamus aut tempore neque iusto dolorum dolorem! Quas consectetur mollitia distinctio.</p>
-              <p class="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quidem inventore ex obcaecati quos expedita maxime voluptates! Et, aspernatur vel eaque ipsum assumenda deserunt, inventore, dolorum voluptatum officiis impedit aperiam omnis. Enim fugiat ut modi similique maxime animi. Modi, magnam eaque aspernatur similique facilis eligendi minima ipsum consequuntur quasi corrupti!</p>
+              <p class="text-justify">Ciekawi Historii? Dobrze trafiliście! Postaramy się w jak największym stopniu zaspokoić Waszą ciekawość. Zapraszamy również do podzielenia się swoimi ciekawostkami...
+                taki mógłby być wstęp zachęcający się do zapoznania ze stroną działającą w rzeczywistości <i class="far fa-smile fa-lg text-warning"></i> </p>
+              <p class="text-justify"><strong>Niniejsza strona jest projektem realizowanym w ramach studiów podyplomowych w <a class="text-body" href="https://www.wsb.pl/" target="_blank">Wyższej Szkole Bankowej</a>
+              na kierunku <i><a class="text-body" href="https://www.wsb.pl/gdansk/studia-i-szkolenia/studia-podyplomowe/kierunki/programista-aplikacji-internetowych-junior-web-developer-z-certyfikatem-programming-html5-javascript" target="_blank">Programista aplikacji internetowych. Junior Web Developer z certyfikatem Programming in HTML5 with JavaScript and CSS3</a></i>.</strong>
+              Są to nasze pierwsze kroki na polu tworzenia stron/aplikacji internetowych. Za cel postawiliśmy sobie stworzyć jak najbardziej "kompletny" projekt, który nie będzie statyczną stroną internetową, tylko stroną, która pozowli na interakcję.
+              Staraliśmy się aby wszystkie umieszczone na niej elementy działały i pozwalały się poruszać po stronie w sposób taki jak to jest na innych działających tego typu strona w Internecie. Mamy świadomość, że daleko nam do ideału <i class="far fa-smile-wink fa-lg text-warning"></i> 
+              i zawsze można ulepszać/zmieniać i dodawać nowe elementy do projektu.
+              </p>
+              <p class="text-justify">Podczas pracy nad projektem zostały wykorzystane następujące technologie:
+                <ul>
+                  <li class="mb-2"><a class="text-body" href="https://pl.wikipedia.org/wiki/HTML" target="_blank"><i class="fab fa-html5 text-danger"></i> HTML</a> i <a class="text-body" href="https://pl.wikipedia.org/wiki/Kaskadowe_arkusze_styl%C3%B3w" target="_blank"><i class="fab fa-css3-alt text-primary"></i> CSS</a> jako podstawa do stworzenia strony,</li>
+                  <li class="mb-2"><a class="text-body" href="https://getbootstrap.com/" target="_blank"><i class="fab fa-bootstrap" style="color: #563d7c"></i> Boostrap</a> aby informacje mogły być przedstawione w przystępny sposób oraz aby strona była czytelna niezależnie od urządzenia na którym będzie wyświetlona,</li>
+                  <li class="mb-2"><a class="text-body" href="https://pl.wikipedia.org/wiki/JavaScript" target="_blank"><i class="fab fa-js text-warning bg-dark"></i> JavaScript</a> i <a class="text-body" href="https://jquery.com/" target="_blank"> <img src="/src/jquery-horizontal.svg" alt="jQuery" height="25px"></a> aby uczynić stronę interaktywną,</li>
+                  <li class="mb-2">oraz <a href="https://firebase.google.com/" target="_blank"><img src="https://www.gstatic.com/devrel-devsite/prod/vbf4f3f66222b8c8c17b31375459c4f918489da36926d67ecaab655b9dc1cf00f/firebase/images/lockup.png?dcb_=0.24564497482673597" alt="Firebase" height="25px" ></a> jako bazę danych przechowującą informacje na temat użytkowników i artykułów.</li>
+                </ul>
+              </p>
+              <p class="text-justify">Chcesz się podzielić opinią o projekcie lub masz uwagi i sugestie do projektu, proszę, skorzystaj z <a class="text-body font-weight-bolder" href="/contact/">formularza kontaktowego</a>. Z chęcią zapoznamy się z Twoją opinią.</p>
             </div>
         </div>
     </div>
   </section>
 
   <!-- footer -->
-  <footer class="bg-secondary fixed-bottom py-3 myFooter">
-    <div class="container-fluid">
-        <div class="row ">
-            <div class="col-6 text-center">
-              <p class="text-light">&copy 2020 CiekawiHistorii.pl - Made by PJ & JK</p>
-            </div>
-            <div class="col-6 text-center">
-                <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook fa-2x text-primary mx-3"></i></a>
-                <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter fa-2x text-info mx-3"></i></a>
-                <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube fa-2x text-danger mx-3"></i></a>
-            </div>
+  <footer class="container-fluid bg-secondary py-3 myFooter">
+    <div class="row ">
+        <div class="col-6 text-center">
+          <p class="text-light">&copy 2020 CiekawiHistorii.pl - Made by PJ & JK</p>
+        </div>
+        <div class="col-6 text-center">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook fa-2x text-primary mx-3"></i></a>
+            <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter fa-2x text-info mx-3"></i></a>
+            <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube fa-2x text-danger mx-3"></i></a>
         </div>
     </div>
 </footer>

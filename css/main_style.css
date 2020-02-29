@@ -5,6 +5,11 @@ body{
     /* background-color: rgb(249,239,215); */
     /* https://hexcolor.co/hex/eae0c8 */
     background-color: rgb(234,224,200);
+    position: relative;
+    min-height: 100vh;
+}
+.mainSection{
+    padding-bottom: 4rem;
 }
 
 .myNav{
@@ -86,6 +91,10 @@ body{
 }
 .myFooter{
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 4rem;
 }
 
 /* duże ekrany */
@@ -105,7 +114,7 @@ body{
     }
 }
 /* Laptop -> tablet */
-@media only screen and (max-width:900px) and (min-width:767px){
+@media only screen and (max-width:900px) and (min-width:768px){
     .inputSearch{
         max-width: 150px;
     }
@@ -139,8 +148,12 @@ body{
     .myContainer{
         font-size: 0.9em;
     }
+    .mainSection{
+        padding-bottom: 4.5rem;
+    }
     .myFooter{
         font-size: 0.8em;
+        height: 4.5rem;
     }
 }
 /* Mobile S */
