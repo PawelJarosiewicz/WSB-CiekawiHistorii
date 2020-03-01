@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet"> 
 
-	<link rel="shortcut icon" href="../src/favicon.ico" />
+	  <link rel="title icon" href="../img/favicon.ico" />
     <link rel="stylesheet" href="../css/main_style.css">
 
     <title>Ciekawi Historii?</title>
@@ -26,14 +26,14 @@
           <!-- drop down menu -->
           <li class="nav-item myNavItem dropdown"><a class="nav-link dropdown-toggle text-light px-3" role="button" data-toggle="dropdown" href="#" id="navDropdown">Epoki</a>
             <div class="dropdown-menu myNavDropdown" aria-labelledby="navDropdown">
-              <a class="dropdown-item text-light myDopdownItem" href="#">Starożytność</a>
-              <a class="dropdown-item text-light myDopdownItem" href="#">Średniowiecze</a>
-              <a class="dropdown-item text-light myDopdownItem" href="#">Nowożytność</a>
-              <a class="dropdown-item text-light myDopdownItem" href="#">Czasy współczesne</a>
+              <a class="dropdown-item text-light myDopdownItem" href="../era/antiquity/">Starożytność</a>
+              <a class="dropdown-item text-light myDopdownItem" href="../era/medieval/">Średniowiecze</a>
+              <a class="dropdown-item text-light myDopdownItem" href="../era/modern/">Nowożytność</a>
+              <a class="dropdown-item text-light myDopdownItem" href="../era/present-day/">Czasy współczesne</a>
           </div>
           </li>
           <!-- end drop down menu -->
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="#">Dodaj Artykuł</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../add-article/">Dodaj Artykuł</a></li>
           <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../index.html">O Nas</a></li>
           <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../contact/">Kontakt</a></li>
         </ul>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </form>
-        <a href="#" class="nav-link ml-2" id="btnLogIn"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+        <a href="../login/" class="nav-link ml-2" id="btnLogIn"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
         </span>
       </div>
     </nav>
@@ -54,7 +54,55 @@
 
     <!-- Zawartość strony -->
     <section class="mainSection">
+      <div class="container-fluid myContainer">
+        <div class="row">
+          <div class="col-lg-11">
+            <h1 class="font-weight-bold pt-4 pb-2">Kontakt</h1>
+            <p class="text-justify pb-2" style="border-bottom: 1px solid #777">W celu skontaktowania się z nami, proszę użyć poniższego formularza. Wszelkie uwagi i komentarze na temat strony mile widziane <i class="far fa-smile fa-lg text-warning"></i></p>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-8">
+            <h3 class="my-3">Formularz kontaktowy</h3>
+            <form class="py-2" action="" onsubmit="return validateSendContact()" >
+              <div class="form-group">
+                <label for="name">Imię <span class="text-muted">(wymagane)</span></label>
+                <input type="text" id="name" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mail <spna class=text-muted>(wymagane)</spna></label>
+                <input type="email" id="email" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="subject">Temat <span class="text-muted">(wymagane)</span></label>
+                <input type="text" id="subject" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="msg">Treść wiadomości <span class="text-muted">(wymagane)</span></label>
+                <textarea id="msg" class="form-control" rows="5" required></textarea>
+              </div>
+              <button class="btn btn-block btn-outline-dark">Wyślij</button>
+            </form>
+          </div>
+        </div>
+      </div> 
     </section>
+
+    <!-- okienko modalne -->
+    <div class="modal fade" id="modal-info">
+      <div class="modal-dialog">
+          <div class="modal-content myModal">
+              <div class="modal-header">
+                  <h4 class="modal-title myModal" id="m-title">Info</h4>
+                  <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body" id="m-body">ewdsfsdfsfdsfsf</div>
+              <div class="modal-footer ">
+                  <button type="button" class="btn btn-primary myModal" data-dismiss="modal">OK</button>
+              </div>
+          </div>
+      </div>
+  </div>
 
   <!-- footer -->
   <footer class="container-fluid bg-secondary py-3 myFooter">
@@ -77,5 +125,29 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/7f7d0c035c.js" crossorigin="anonymous"></script>
+    <!-- własne skrypty -->
+    <script src="../scripts/main_script.js" type="text/javascript"></script>
+    <script src="script/contact_script.js" type="text/javascript"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyDg0c1mTbkxsHiFEO_qacswxvcmV2seSeo",
+        authDomain: "ciekawi-historii.firebaseapp.com",
+        databaseURL: "https://ciekawi-historii.firebaseio.com",
+        projectId: "ciekawi-historii",
+        storageBucket: "ciekawi-historii.appspot.com",
+        messagingSenderId: "597997039136",
+        appId: "1:597997039136:web:cfab90032b8435068e9645"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
   </body>
 </html>

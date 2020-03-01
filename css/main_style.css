@@ -130,6 +130,9 @@ body{
     .myFooter{
         font-size: 0.9em;
     }
+    .myModal{
+        font-size: 0.9em;
+    }
 }
 /* Tablet -> Mobile L,M */
 @media only screen and (max-width: 767px) and (min-width: 321px){
@@ -155,6 +158,9 @@ body{
         font-size: 0.8em;
         height: 4.5rem;
     }
+    .myModal{
+        font-size: 0.9em;
+    }
 }
 /* Mobile S */
 @media only screen and (max-width:320px){
@@ -175,5 +181,8 @@ body{
     }
     .myFooter{
         font-size: 0.7em;
+    }
+    .myModal{
+        font-size: 0.9em;
     }
 }
