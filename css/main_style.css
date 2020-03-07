@@ -17,26 +17,28 @@ body{
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
     font-size: 1.2em;
 }
-.myNavItem:hover{
-    border-bottom: 1px solid rgb(0, 128, 0);
+.myNavItem{
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
+}
+.myNavItem:hover{
+    border-bottom: 1px solid rgb(0, 128, 0);
 }
 .myNavDropdown{
     margin-top: 5px;
     background-color: rgb(20, 20, 50);
     border: 1px solid rgb(0, 128, 0);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 .myDopdownItem:hover{
     border-bottom: 1px solid rgb(0, 128, 0);
     background-color: rgb(20, 20, 50);
     border-radius: 5px;
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
 }
 .myNavBtnRight{
     padding-left: 0;
@@ -47,25 +49,28 @@ body{
 }
 .myBtnSearch{
     background-color: lightgray;
-}
-.myBtnSearch:hover{
-    background-color: rgb(40, 40, 100);
-    color: rgb(0, 128, 0);
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
+}
+.myBtnSearch:hover{
+    background-color: rgb(40, 40, 100);
+    transform: translateY(-1px);
+    color: rgb(0, 128, 0);
 }
 .myIconSearch:hover{
     color: rgb(0, 128, 0);
 }
-#btnLogIn:hover{
-    background-color: rgb(40, 40, 100);
-    border-radius: 5px;
+#btnLogIn{
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
+}
+#btnLogIn:hover{
+    background-color: rgb(40, 40, 100);
+    border-radius: 5px;
 }
 .mySidebarRight{
     z-index: 100;
