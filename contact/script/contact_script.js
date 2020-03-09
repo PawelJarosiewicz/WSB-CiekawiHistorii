@@ -1,16 +1,3 @@
-$(document).ready(function(){
-    //kontrola stanu zalogowanego użytkownika
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            currUser = user;
-            console.log('Logged user id='+currUser.uid);           
-        } else {
-            currUser=null;
-            console.log('User not logged');
-        }
-      });
-});
-
 var documentRef;    //odnośnik do zapisanego dokumentu
 
 function saveContactMsg(){
