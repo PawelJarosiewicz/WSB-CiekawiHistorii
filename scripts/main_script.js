@@ -15,17 +15,22 @@ $(document).ready(function(){
           console.log('User not logged');
       }
     });
+  //czas trwania sesji
+  // Indicates that the state will only persist in the current session or tab, 
+  //and will be cleared when the tab or window in which the user authenticated is closed. 
+  firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
+  .catch(function(error) {
+    console.error('Session persistence: '+error.code+' '+error.message);
+  });
+
 });
 
 function changeNavToggleIcon(){
-  if($('#nav').hasClass('show')){
-    // $('#navToggleButton').html('<i class="fas fa-bars text-light fa-lg"></i>');
-    
+  if($('#nav').hasClass('show')){    
     $('.fa-times').addClass('collapse');
     $('.fa-bars').removeClass('collapse');
   }
   else{
-    // $('#navToggleButton').html('<i class="fas fa-times text-success fa-lg"></i>');
     $('.fa-bars').addClass('collapse');
     $('.fa-times').removeClass('collapse');
   }
@@ -57,4 +62,23 @@ function validateEmail(email)
 {
     let re = /\S+@\S+\.\S+/;
     return re.test(email);
+}
+
+function checkEmail(){
+  try{
+    //werfyikacja uruchamiana tylko wtedy gdy już pole zostało pierwszy raz sprawdzone
+    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
+      if(validateEmail(this.value)){
+        this.classList.remove('is-invalid');
+        this.classList.add('is-valid');
+      }
+      else{
+        this.classList.remove('is-valid');
+        this.classList.add('is-invalid');
+      }
+    }
+  }
+  catch(err){
+    console.log('Check email error: '+err);
+  }
 }

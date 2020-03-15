@@ -11,15 +11,16 @@
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet"> 
 
-	  <link rel="title icon" href="../img/favicon.ico" />
-    <link rel="stylesheet" href="../css/main_style.css">
+	<link rel="title icon" href="../../img/favicon.ico" />
+  <link rel="stylesheet" href="../../css/main_style.css">
+  <link rel="stylesheet" href="../css/user_style.css">
 
     <title>Ciekawi Historii?</title>
   </head>
   <body>
     <!-- menu -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top myNav">
-      <a href="../index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
+      <a href="../../index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
       <button type="button" class="navbar-toggler py-2" data-toggle="collapse" data-target="#nav" id="navToggleButton" ><i class="fas fa-bars text-light fa-lg"></i><i class="fas fa-times text-success fa-lg collapse"></i></button>  
       <div class="collapse navbar-collapse justify-content-between" id="nav">
         <ul class="navbar-nav">
@@ -33,9 +34,9 @@
           </div>
           </li>
           <!-- end drop down menu -->
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../add-article">Dodaj Artykuł</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../index.html">O Nas</a></li>
-          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../contact">Kontakt</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../../add-article">Dodaj Artykuł</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../../index.html">O Nas</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="../../contact">Kontakt</a></li>
         </ul>
         <span class="d-md-flex">
           <form class="form-inline">
@@ -46,7 +47,7 @@
                 </div>
             </div>
         </form>
-        <a href="../user/login/" class="nav-link ml-2" id="btnLogIn"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+        <a href="#" class="nav-link ml-2" id="btnLogIn"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
         </span>
       </div>
     </nav>
@@ -55,34 +56,61 @@
     <!-- Zawartość strony -->
     <section class="mainSection">
       <div class="container-fluid myContainer">
-        <div class="row">
-          <div class="col-lg-11">
-            <h1 class="font-weight-bold pt-4 pb-2">Kontakt</h1>
-            <p class="text-justify border-bottom border-dark pb-2">W celu skontaktowania się z nami, proszę użyć poniższego formularza. Wszelkie uwagi i komentarze na temat strony mile widziane <i class="far fa-smile fa-lg text-warning"></i></p>
+        <div class="row justify-content-center mt-5">
+          <div class="col-lg-6 col-md-8 text-center">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn text-light myActiveBtn" id="btnLogin">Logowanie</button>
+                <button type="button" class="btn myInActiveBtn" id="btnNewUser">Utwórz konto</button>
+              </div>
           </div>
         </div>
         <div class="row justify-content-center">
-          <div class="col-lg-6 col-md-8">
-            <h3 class="my-3">Formularz kontaktowy</h3>
-            <form class="py-2" action="" id="contactForm" onsubmit="return validateSendContact(event)" novalidate>
+          <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
+            <!-- forma logowania -->
+            <form class="py-2 needs-validation" action=".." id="loginFrm" novalidate>
               <div class="form-group">
-                <label for="name">Imię <span class="text-muted">(wymagane)</span></label>
-                <input type="text" id="name" class="form-control" required>
-              </div>
-              <div class="form-group">
-                <label for="email">E-mail <spna class=text-muted>(wymagane)</spna></label>
-                <input type="email" id="email" class="form-control" required>
+                <label for="loginEmail">E-mail</label>
+                <input type="email" id="loginEmail" class="form-control" required>
                 <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
               </div>
               <div class="form-group">
-                <label for="subject">Temat <span class="text-muted">(wymagane)</span></label>
-                <input type="text" id="subject" class="form-control" required>
+                <label for="loginPass">Hasło</label>
+                <input type="password" class="form-control" id="loginPass" required>
+                <div class="invalid-feedback">Hasło musi mieć minimum 6 znaków.</div>
+              </div>
+              <div class="form-row">
+                <div class="form-group form-check">
+                  <input type="checkbox" class="form-check-input" id="loginCheck">
+                  <label class="form-check-label" for="loginCheck">Zapamiętaj mnie</label>
+                </div>
+                <a href="../reset-password" class="ml-auto">Nie pamiętam hasła</a>
+              </div>
+              <button type="submit" class="btn btn-block btn-outline-success">Zaloguj się</button>
+            </form>
+            <!-- forma nowego konta -->
+            <form class="py-2 needs-validation collapse" action=".." id="newUserFrm" novalidate>
+              <div class="form-group">
+                <label for="name">Imię</label>
+                <input type="text" id="newUserName" class="form-control" required>
+                <div class="invalid-feedback">Podaj swoje imię, minimum 3 znaki.</div>
               </div>
               <div class="form-group">
-                <label for="msg">Treść wiadomości <span class="text-muted">(wymagane)</span></label>
-                <textarea id="msg" class="form-control" rows="5" required></textarea>
+                <label for="loginEmail">E-mail</label>
+                <input type="email" id="newUserEmail" class="form-control" required>
+                <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
               </div>
-              <button class="btn btn-block btn-outline-dark">Wyślij</button>
+              <div class="form-group">
+                <label for="loginPass">Hasło</label>
+                <input type="password" class="form-control" id="newUserPass" required>
+                <small  class="form-text text-muted">Twoje hasło musi mieć minimum 6 znaków.</small>
+                <div class="invalid-feedback">Proszę podać hasło.</div>
+              </div>
+              <div class="form-group">
+                <label for="loginPass">Powtórz hasło</label>
+                <input type="password" class="form-control" id="newUserPass2" required>
+                <div class="invalid-feedback">Proszę powtórz hasło.</div>
+              </div>
+              <button type="submit" class="btn btn-block btn-outline-success">Utwórz konto</button>
             </form>
           </div>
         </div>
@@ -106,8 +134,8 @@
   </div>
 
   <!-- footer -->
-  <footer class="container-fluid bg-secondary myFooter py-3">
-    <div class="row">
+  <footer class="container-fluid bg-secondary py-3 myFooter">
+    <div class="row ">
         <div class="col-6 text-center">
           <p class="text-light m-0">&copy 2020 CiekawiHistorii.pl - Made by Jakub Kruszyński & Paweł Jarosiewicz</p>
         </div>
@@ -128,13 +156,13 @@
     <script src="https://kit.fontawesome.com/7f7d0c035c.js" crossorigin="anonymous"></script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="../scripts/firebase/7.9.3/firebase-app.js"></script>
-    <script src="../scripts/firebase/7.9.3/firebase-firestore.js"></script>
-    <script src="../scripts/firebase/7.9.3/firebase-auth.js"></script>
-    <script src="../scripts/init-firebase.js"></script>
+    <script src="../../scripts/firebase/7.9.3/firebase-app.js"></script>
+    <script src="../../scripts/firebase/7.9.3/firebase-firestore.js"></script>
+    <script src="../../scripts/firebase/7.9.3/firebase-auth.js"></script>
+    <script src="../../scripts/init-firebase.js"></script>
 
     <!-- własne skrypty -->
-    <script src="../scripts/main_script.js" type="text/javascript"></script>
-    <script src="script/contact_script.js" type="text/javascript"></script>
+    <script src="../../scripts/main_script.js" type="text/javascript"></script>
+    <script src="../script/user_script.js" type="text/javascript"></script>
   </body>
 </html>

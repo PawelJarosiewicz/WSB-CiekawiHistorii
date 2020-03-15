@@ -1,0 +1,15 @@
+.myActiveBtn{
+    background-color: rgb(40, 40, 100);
+    margin: 2px;
+}
+.myInActiveBtn{
+    border: 2px solid rgb(40, 40, 100);
+    margin: 2px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.myInActiveBtn:hover{
+    transform: translateY(-2px);
+}
