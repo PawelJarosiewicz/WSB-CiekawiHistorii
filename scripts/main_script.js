@@ -23,6 +23,9 @@ $(document).ready(function(){
     console.error('Session persistence: '+error.code+' '+error.message);
   });
 
+  //podpowiedzi
+  $('[data-toggle="tooltip"]').tooltip();
+  // $('#btnLogIn').tooltip();
 });
 
 function changeNavToggleIcon(){

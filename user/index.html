@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pl,en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet"> 
+
+    <link rel="title icon" href="/img/favicon.ico" />
+    <link rel="stylesheet" href="/css/main_style.css">
+    <link rel="stylesheet" href="/user/css/user_style.css">
+
+    <title>Ciekawi Historii?</title>
+  </head>
+  <body>
+    <!-- menu -->
+    <nav class="navbar navbar-expand-md navbar-light sticky-top myNav">
+      <a href="index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
+      <button type="button" class="navbar-toggler py-2" data-toggle="collapse" data-target="#nav" id="navToggleButton" ><i class="fas fa-bars text-light fa-lg"></i><i class="fas fa-times text-success fa-lg collapse"></i></button>  
+      <div class="collapse navbar-collapse justify-content-between" id="nav">
+        <ul class="navbar-nav">
+          <!-- drop down menu -->
+          <li class="nav-item myNavItem dropdown"><a class="nav-link dropdown-toggle text-light px-3" role="button" data-toggle="dropdown" href="#" id="navDropdown">Epoki</a>
+            <div class="dropdown-menu myNavDropdown" aria-labelledby="navDropdown">
+              <a class="dropdown-item text-light myDopdownItem" href="/era/antiquity/">Starożytność</a>
+              <a class="dropdown-item text-light myDopdownItem" href="/era/medieval/">Średniowiecze</a>
+              <a class="dropdown-item text-light myDopdownItem" href="/era/modern/">Nowożytność</a>
+              <a class="dropdown-item text-light myDopdownItem" href="/era/present-day/">Czasy współczesne</a>
+          </div>
+          </li>
+          <!-- end drop down menu -->
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="add-article">Dodaj Artykuł</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="/index.html">O Nas</a></li>
+          <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="/contact">Kontakt</a></li>
+        </ul>
+        <span class="d-md-flex">
+          <form class="form-inline">
+            <div class="input-group">
+                <input class="form-control inputSearch" type="text" placeholder="szukaj...">
+                <div class="input-group-append">
+                    <button type="button" class="btn text-muted myBtnSearch" ><i class="fas fa-search myIconSearch"></i></button>
+                </div>
+            </div>
+        </form>
+        <a href="login" class="nav-link ml-2" id="btnLogIn" data-toggle="tooltip" data-html="true" title="<h6> Zaloguj się lub utwórz konto </h6>" ><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+        </span>
+      </div>
+    </nav>
+    <!-- end menu -->
+
+    <!-- Zawartość strony -->
+    <section class="mainSection">
+      <div class="container-fluid myContainer">
+        <!-- menu zakładek -->
+        <ul class="nav nav-pills justify-content-center m-3" role="tablist" aria-orientation="vertical">
+          <li class="nav-item myNavPill">
+            <a class="nav-link text-body active" id="navProfile" data-toggle="pill" href="#tabProfile" role="tab" aria-controls="tabProfile" aria-selected="true"><i class="fas fa-user text-info fa-lg "></i><span class="myProfileLabel ml-2">Twój profil</span></a>
+          </li>
+          <li class="nav-item myNavPill">
+            <a class="nav-link text-body" id="navArticles" data-toggle="pill" href="#tabArticles" role="tab" aria-controls="tabArticles" aria-selected="false"><i class="far fa-newspaper text-muted fa-lg"></i><span class="myProfileLabel ml-2">Twoje artykuły</span></a>
+          </li>
+          <li class="nav-item myNavPill">
+            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#tabLogout" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
+          </li>
+        </ul>
+        <!-- zawartości zakładek -->
+        <div class="tab-content pt-3">
+          <div class="tab-pane fade show active" id="tabProfile" role="tabpanel" aria-labelledby="tabProfile-tab">
+            <div class="row justify-content-center">
+              <div class="col-xl-8 col-lg-10 col-md-11">
+                <p class="mb-1 h6">Witaj <span>"imie_usera"</span>.</p>
+                <p class="text-justify border-bottom border-dark pb-2 h6">Poniżej znajdują się informacje na temat Twojego konta w naszym serwisie.</p>
+                <form class="py-2" novalidate>
+                  <div class="form-group row">
+                    <label for="profileUserName" class="col-sm-2 col-form-label text-sm-right">Imię:</label>
+                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="text" id="profileUserName" class="form-control" readonly></div>
+                    <button type="button" class="btn text-warning myNavPill" ><i class="fas fa-feather-alt fa-lg"></i></button>
+                  </div>
+                  <div class="form-group row">
+                    <label for="profileUserEmail" class="col-sm-2 col-form-label text-sm-right">E-mail:</label>
+                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="email" id="profileUserEmail" class="form-control" readonly></div>                
+                  </div>
+                  <div class="form-group row">
+                    <label for="profileUserPass" class="col-sm-2 col-form-label text-sm-right">Hasło:</label>
+                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="password" class="form-control" id="profileUserPass" readonly></div>
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+            
+          </div>
+          <div class="tab-pane fade h5" id="tabArticles" role="tabpanel" aria-labelledby="tabArticles-tab">Artykuły</div>
+          <div class="tab-pane fade h5 text-center" id="tabLogout" role="tabpanel" aria-labelledby="tabLogout-tab">Wylogowanie..</div>
+        </div>
+      </div>
+  </section>
+
+  <!-- footer -->
+  <footer class="container-fluid bg-secondary py-3 myFooter">
+    <div class="row">
+        <div class="col-6 text-center">
+          <p class="text-light m-0">&copy 2020 CiekawiHistorii.pl - Made by Jakub Kruszyński & Paweł Jarosiewicz</p>
+        </div>
+        <div class="col-6 text-center">
+            <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook fa-2x text-primary mx-3"></i></a>
+            <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter fa-2x text-info mx-3"></i></a>
+            <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube fa-2x text-danger mx-3"></i></a>
+        </div>
+    </div>
+</footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7f7d0c035c.js" crossorigin="anonymous"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/scripts/firebase/7.9.3/firebase-app.js"></script>
+    <script src="/scripts/firebase/7.9.3/firebase-firestore.js"></script>
+    <script src="/scripts/firebase/7.9.3/firebase-auth.js"></script>
+    <script src="/scripts/init-firebase.js"></script>
+
+    <!-- własne skrypty -->
+    <script src="/scripts/main_script.js" type="text/javascript"></script>
+    <script src="script/user_script.js"></script>
+  </body>
+</html>

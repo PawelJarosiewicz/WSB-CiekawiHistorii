@@ -13,3 +13,36 @@
 .myInActiveBtn:hover{
     transform: translateY(-2px);
 }
+.myNavPill{
+    border-bottom: 1px solid rgb(20, 20, 50);
+    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+    margin-right: 1%;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.nav-pills > li > a.active {
+    background-color: rgb(20, 20, 50)!important;
+    color: rgb(248, 249, 250) !important;
+    box-shadow: 2px 4px 15px #999;
+  }
+  
+  .nav-pills > li:hover {
+    box-shadow: 4px 6px 20px #999;
+    transform: translateY(-2px);
+  }
+
+  /* Tablet -> Mobile L,M */
+@media only screen and (max-width: 767px) and (min-width: 321px){
+    .myProfileLabel{
+        display: none;
+    }
+}
+/* Mobile S */
+@media only screen and (max-width:320px){
+    .myProfileLabel{
+        display: none;
+    }
+}

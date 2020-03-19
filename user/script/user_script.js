@@ -31,7 +31,30 @@ $(document).ready(function(){
   $('#newUserEmail').on('input',checkEmail); 
   $('#newUserPass').on('input',checkPass);
   $('#newUserPass2').on('input',checkPass2);
+
+  //podpowiedzi dla urządzeń mobilnych
+  $(window).on('ready resize orientationchange',showPillToolTips); 
 });
+
+function showPillToolTips(){
+  try{
+    if($(window).width()<=768){
+      $('[data-toggle="pill"]').attr('data-html',true);
+      $('#navProfile').attr('title','<h6>Twój profil</h6>');
+      $('#navArticles').attr('title','<h6>Twój artykuły</h6>');
+      $('#navLogout').attr('title','<h6>Wyloguj...</h6>');
+      $('[data-toggle="pill"]').tooltip();
+    }
+    else{
+      $('[data-toggle="pill"]').removeAttr('data-html');
+      $('[data-toggle="pill"]').removeAttr('title');  //trzeba usunąć atrybut
+      $('[data-toggle="pill"]').tooltip('dispose'); //i wyłączyć tooltip
+    }
+  }
+  catch(err){
+    console.log('Tooltip error: '+err);
+  }
+}
 
 function checkPass(){
   try{
