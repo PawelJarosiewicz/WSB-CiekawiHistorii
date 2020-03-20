@@ -13,6 +13,20 @@
 .myInActiveBtn:hover{
     transform: translateY(-2px);
 }
+.myButton{
+    border-bottom: 1px solid rgb(20, 20, 50);
+    border-radius: 5px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.myButton:hover{
+    background-color: rgb(20, 20, 50);
+    box-shadow: 4px 6px 20px #999;
+    transform: translateY(-2px);
+    color: rgb(255,0,0);
+}
 .myNavPill{
     border-bottom: 1px solid rgb(20, 20, 50);
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;

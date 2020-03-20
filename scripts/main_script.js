@@ -39,9 +39,57 @@ function changeNavToggleIcon(){
   }
 }
 
+function logOut(){
+  try{
+    let modalTemplate = 
+    '<div class="modal fade" id="sign-out">' +
+      '<div class="modal-dialog">' +
+          '<div class="modal-content">' +
+              '<div class="modal-header myModal">' +
+                  '<h4 class="modal-title myModal">Wylogowanie...</h4>'+
+                  '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
+              '</div>' +
+              '<div class="modal-body">Czy chcesz się wylogować?</div>' +
+              '<div class="modal-footer">' +
+                  '<button type="button" class="btn btn-success myModal" data-dismiss="modal">Nie</button>' +
+                  '<button type="button" class="btn btn-danger myModal" data-dismiss="modal" onclick="friebaseLogOut()">Tak</button>' +
+              '</div>' +
+          '</div>' +
+      '</div>' +
+    '</div>';
+
+    $(modalTemplate).modal();
+  }
+  catch(err){
+    console.error('Log out modal error: '+err);
+  }
+}
+
+function showError(sHeader,sBody){
+  try{
+    let modalTemplate =
+    '<div class="modal fade">' +
+        '<div class="modal-dialog">' +
+            '<div class="modal-content myModal ">' +
+                '<div class="modal-header text-danger ">' +
+                    '<h4 class="modal-title myModal font-weight-bold">' +sHeader+'</h4>'+
+                    '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
+                '</div>' +
+                '<div class="modal-body">' +sBody+'</div>' +
+                '<div class="modal-footer ">' +
+                    '<button type="button" class="btn btn-warning myModal" data-dismiss="modal">OK</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+    $(modalTemplate).modal();
+  }
+  catch(err){
+    console.error('Show modal error: '+err);
+  }
+}
+
 // Firebase
-
-
 function firebaseLogInAnonymous(){
    return firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -53,11 +101,13 @@ function firebaseLogInAnonymous(){
 function friebaseLogOut(){
     if(currUser){
         firebase.auth().signOut().then(function() {
-            console.log('User log out');
+          window.location.href = '/user/login';
           }).catch(function(error) {
             console.error('Error during log out ',error);
           });
-          
+    }
+    else{
+      window.location.href = '/user/login';
     }
 }
 
@@ -82,6 +132,6 @@ function checkEmail(){
     }
   }
   catch(err){
-    console.log('Check email error: '+err);
+    console.error('Check email error: '+err);
   }
 }

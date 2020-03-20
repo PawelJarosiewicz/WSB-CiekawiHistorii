@@ -32,6 +32,9 @@ $(document).ready(function(){
   $('#newUserPass').on('input',checkPass);
   $('#newUserPass2').on('input',checkPass2);
 
+  //wylogowanie
+  $('#navLogout').click(logOut);
+
   //podpowiedzi dla urządzeń mobilnych
   $(window).on('ready resize orientationchange',showPillToolTips); 
 });

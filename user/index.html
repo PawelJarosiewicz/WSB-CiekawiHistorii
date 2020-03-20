@@ -20,7 +20,7 @@
   <body>
     <!-- menu -->
     <nav class="navbar navbar-expand-md navbar-light sticky-top myNav">
-      <a href="index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
+      <a href="/index.html" class="navbar-brand"><i class="fas fa-atlas fa-2x text-white"></i></a>
       <button type="button" class="navbar-toggler py-2" data-toggle="collapse" data-target="#nav" id="navToggleButton" ><i class="fas fa-bars text-light fa-lg"></i><i class="fas fa-times text-success fa-lg collapse"></i></button>  
       <div class="collapse navbar-collapse justify-content-between" id="nav">
         <ul class="navbar-nav">
@@ -65,7 +65,7 @@
             <a class="nav-link text-body" id="navArticles" data-toggle="pill" href="#tabArticles" role="tab" aria-controls="tabArticles" aria-selected="false"><i class="far fa-newspaper text-muted fa-lg"></i><span class="myProfileLabel ml-2">Twoje artykuły</span></a>
           </li>
           <li class="nav-item myNavPill">
-            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#tabLogout" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
+            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
           </li>
         </ul>
         <!-- zawartości zakładek -->
@@ -77,26 +77,32 @@
                 <p class="text-justify border-bottom border-dark pb-2 h6">Poniżej znajdują się informacje na temat Twojego konta w naszym serwisie.</p>
                 <form class="py-2" novalidate>
                   <div class="form-group row">
-                    <label for="profileUserName" class="col-sm-2 col-form-label text-sm-right">Imię:</label>
-                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="text" id="profileUserName" class="form-control" readonly></div>
-                    <button type="button" class="btn text-warning myNavPill" ><i class="fas fa-feather-alt fa-lg"></i></button>
+                    <label for="profileUserName" class="col-2 col-form-label text-right px-sm-3 px-0">Imię:</label>
+                    <div class="col-sm-8 col-9 pl-sm-0 input-group">
+                      <input type="text" id="profileUserName" class="form-control" readonly>
+                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień imię</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                    </div> 
                   </div>
                   <div class="form-group row">
-                    <label for="profileUserEmail" class="col-sm-2 col-form-label text-sm-right">E-mail:</label>
-                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="email" id="profileUserEmail" class="form-control" readonly></div>                
+                    <label for="profileUserEmail" class="col-2 col-form-label text-right px-sm-3 px-0">E-mail:</label>
+                    <div class="col-sm-8 col-9 pl-sm-0 input-group">
+                      <input type="email" id="profileUserEmail" class="form-control" readonly>
+                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień e-mail</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                    </div>                
                   </div>
                   <div class="form-group row">
-                    <label for="profileUserPass" class="col-sm-2 col-form-label text-sm-right">Hasło:</label>
-                    <div class="col-md-8 col-sm-9 pl-sm-0"><input type="password" class="form-control" id="profileUserPass" readonly></div>
+                    <label for="profileUserPass" class="col-2 col-form-label text-right px-sm-3 px-0">Hasło:</label>
+                    <div class="col-sm-8 col-9 col-8 pl-sm-0 input-group">
+                      <input type="password" class="form-control" id="profileUserPass" readonly>
+                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień hasło</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                    </div>
                   </div>
                 </form>
               </div>
-              
             </div>
-            
           </div>
           <div class="tab-pane fade h5" id="tabArticles" role="tabpanel" aria-labelledby="tabArticles-tab">Artykuły</div>
-          <div class="tab-pane fade h5 text-center" id="tabLogout" role="tabpanel" aria-labelledby="tabLogout-tab">Wylogowanie..</div>
+          <!-- <div class="tab-pane fade h5 text-center" id="tabLogout" role="tabpanel" aria-labelledby="tabLogout-tab">Wylogowanie..</div> -->
         </div>
       </div>
   </section>
