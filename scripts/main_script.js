@@ -57,7 +57,6 @@ function logOut(){
           '</div>' +
       '</div>' +
     '</div>';
-
     $(modalTemplate).modal();
   }
   catch(err){
@@ -70,14 +69,39 @@ function showError(sHeader,sBody){
     let modalTemplate =
     '<div class="modal fade">' +
         '<div class="modal-dialog">' +
-            '<div class="modal-content myModal ">' +
+            '<div class="modal-content">' +
                 '<div class="modal-header text-danger ">' +
-                    '<h4 class="modal-title myModal font-weight-bold">' +sHeader+'</h4>'+
+                    '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
                     '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
                 '</div>' +
-                '<div class="modal-body">' +sBody+'</div>' +
+                '<div class="modal-body myModal">' +sBody+'</div>' +
                 '<div class="modal-footer ">' +
                     '<button type="button" class="btn btn-warning myModal" data-dismiss="modal">OK</button>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
+    console.error(sHeader+' '+sBody);
+    $(modalTemplate).modal();
+  }
+  catch(err){
+    console.error('Show modal error: '+err);
+  }
+}
+
+function showInfo(sHeader,sBody,sFunction){
+  try{
+    let modalTemplate =
+    '<div class="modal fade">' +
+        '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+                '<div class="modal-header text-info">' +
+                    '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
+                    '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
+                '</div>' +
+                '<div class="modal-body myModal">' +sBody+'</div>' +
+                '<div class="modal-footer ">' +
+                    '<button type="button" class="btn btn-info myModal" data-dismiss="modal" onclick="sFunction()">OK</button>' +
                 '</div>' +
             '</div>' +
         '</div>' +

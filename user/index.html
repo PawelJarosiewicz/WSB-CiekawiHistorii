@@ -65,7 +65,7 @@
             <a class="nav-link text-body" id="navArticles" data-toggle="pill" href="#tabArticles" role="tab" aria-controls="tabArticles" aria-selected="false"><i class="far fa-newspaper text-muted fa-lg"></i><span class="myProfileLabel ml-2">Twoje artykuły</span></a>
           </li>
           <li class="nav-item myNavPill">
-            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
+            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#tabProfile" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
           </li>
         </ul>
         <!-- zawartości zakładek -->
@@ -73,28 +73,33 @@
           <div class="tab-pane fade show active" id="tabProfile" role="tabpanel" aria-labelledby="tabProfile-tab">
             <div class="row justify-content-center">
               <div class="col-xl-8 col-lg-10 col-md-11">
-                <p class="mb-1 h6">Witaj <span>"imie_usera"</span>.</p>
+                <p class="mb-1 h6">Witaj <span id="userNameSpan">"imie_usera"</span>.</p>
                 <p class="text-justify border-bottom border-dark pb-2 h6">Poniżej znajdują się informacje na temat Twojego konta w naszym serwisie.</p>
                 <form class="py-2" novalidate>
                   <div class="form-group row">
                     <label for="profileUserName" class="col-2 col-form-label text-right px-sm-3 px-0">Imię:</label>
                     <div class="col-sm-8 col-9 pl-sm-0 input-group">
                       <input type="text" id="profileUserName" class="form-control" readonly>
-                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień imię</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                      <button type="button" id="btnChangeName" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień imię</h6>" data-target="#modalChangeName"><i class="fas fa-feather-alt fa-lg "></i></button>
                     </div> 
                   </div>
                   <div class="form-group row">
                     <label for="profileUserEmail" class="col-2 col-form-label text-right px-sm-3 px-0">E-mail:</label>
                     <div class="col-sm-8 col-9 pl-sm-0 input-group">
                       <input type="email" id="profileUserEmail" class="form-control" readonly>
-                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień e-mail</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                      <button type="button" id="btnChangeMail" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień e-mail</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
                     </div>                
                   </div>
                   <div class="form-group row">
                     <label for="profileUserPass" class="col-2 col-form-label text-right px-sm-3 px-0">Hasło:</label>
                     <div class="col-sm-8 col-9 col-8 pl-sm-0 input-group">
                       <input type="password" class="form-control" id="profileUserPass" readonly>
-                      <button type="button" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień hasło</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                      <button type="button" id="btnChangePass" class="input-group-append btn myButton ml-1" data-toggle="tooltip" data-html="true" title="<h6>Zmień hasło</h6>" ><i class="fas fa-feather-alt fa-lg "></i></button>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row justify-content-center">
+                      <button type="button" id="btnDelUser" class="btn btn-outline-dark myButton px-5" data-toggle="modal" data-target="#modalDelUser">Usuń konto</button>
                     </div>
                   </div>
                 </form>
@@ -106,6 +111,127 @@
         </div>
       </div>
   </section>
+  <!-- okna modalne do obsługi konta -->
+  <div class="modal fade" id="modalChangeName">
+    <div class="modal-dialog">
+        <div class="modal-content myModal">
+            <div class="modal-header">
+                <h6 class="modal-title">Zmieniasz swoje imię</h6>
+                <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <label for="changeNewName">Nowe imię:</label>
+              <input type="text" class="form-control" id="changeNewName">
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" onclick="changeUserName(document.getElementById('changeNewName').value)">Zatwierdź</button>
+                <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal">Anuluj</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalChangeMail">
+    <div class="modal-dialog">
+        <div class="modal-content myModal">
+            <div class="modal-header">
+                <h6 class="modal-title">Zmieniasz swój e-mail</h6>
+                <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body"> 
+              <form class="needs-validation" novalidate>
+                <label for="changeNewMail" class="font-weight-bolder">Nowy adres e-mail:</label>
+                <input type="email" class="form-control border border-warning" id="changeMailNewMail">
+                <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
+                <p class="font-weight-bolder mt-4">Podaj aktualne dane konta aby potwierdzić zmianę adresu e-mail.</p>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend"><span class="input-group-text">E-mail:</span></div>
+                  <input type="email" id="changeMailOldMail" class="form-control">
+                  <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text">Hasło:</span></div>
+                  <input type="password" class="form-control" id="changeMailPass">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" onclick="changeUserMail(event,document.getElementById('changeMailNewMail'), document.getElementById('changeMailOldMail'), document.getElementById('changeMailPass'))">Zatwierdź</button>
+                <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal" onclick="changeModalClear(document.getElementById('changeMailNewMail'), document.getElementById('changeMailOldMail'), document.getElementById('changeMailPass'))">Anuluj</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalChangePass">
+    <div class="modal-dialog">
+        <div class="modal-content myModal">
+            <div class="modal-header">
+                <h6 class="modal-title">Zmieniasz swoje hasło</h6>
+                <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body"> 
+              <form class="needs-validation" novalidate>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend"><span class="input-group-text">Nowe hasło:</span></div>
+                  <input type="password" id="changePassNewPass" class="form-control border-warning">
+                  <div class="invalid-feedback">Proszę podać hasło. Minimum 6 znaków</div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text">Powtórz hasło:</span></div>
+                  <input type="password" id="changePassNewPass2" class="form-control border-warning">
+                  <div class="invalid-feedback">Proszę podać hasło. Hasła musza być zgodne.</div>
+                </div>
+                
+                <p class="font-weight-bolder mt-4">Podaj aktualne dane konta aby potwierdzić zmianę hasła.</p>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend"><span class="input-group-text">E-mail:</span></div>
+                  <input type="email" id="changePassMail" class="form-control">
+                  <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text">Hasło:</span></div>
+                  <input type="password" class="form-control" id="changePassOldPass">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" onclick="changeUserPass(event,document.getElementById('changePassNewPass'),document.getElementById('changePassNewPass2'), document.getElementById('changePassMail'), document.getElementById('changePassOldPass'))">Zatwierdź</button>
+                <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal" onclick="changeModalClear(document.getElementById('changePassNewPass'), document.getElementById('changePassMail'), document.getElementById('changePassOldPass'),document.getElementById('changePassNewPass2'))">Anuluj</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalDelUser">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Usuwanie konta</h6>
+                <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p class="font-weight-bolder text-danger">Czy jesteś pewien i chcesz usunąć swoje konto?</p>
+              <form class="needs-validation" novalidate>                
+                <p class="font-weight-bolder mt-4">Podaj aktualne dane konta aby potwierdzić zmianę hasła.</p>
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend"><span class="input-group-text">E-mail:</span></div>
+                  <input type="email" id="delUserMail" class="form-control">
+                  <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
+                </div>
+                <div class="input-group">
+                  <div class="input-group-prepend"><span class="input-group-text">Hasło:</span></div>
+                  <input type="password" class="form-control" id="delUserPass">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" onclick="deleteUser(event,document.getElementById('delUserMail'),document.getElementById('delUserPass'))">Zatwierdź</button>
+                <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal" onclick="changeModalClear(document.getElementById('delUserMail'),document.getElementById('delUserPass'))">Anuluj</button>
+            </div>
+        </div>
+    </div>
+  </div>
 
   <!-- footer -->
   <footer class="container-fluid bg-secondary py-3 myFooter">
@@ -136,7 +262,8 @@
     <script src="/scripts/init-firebase.js"></script>
 
     <!-- własne skrypty -->
-    <script src="/scripts/main_script.js" type="text/javascript"></script>
+    <script defer src="/scripts/main_script.js" type="text/javascript"></script>
     <script src="script/user_script.js"></script>
+    <script src="script/userLogin_script.js"></script>
   </body>
 </html>

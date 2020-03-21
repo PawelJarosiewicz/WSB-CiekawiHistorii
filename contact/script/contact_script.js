@@ -26,8 +26,8 @@ function validateSendContact(e){
     e.target.classList.add('was-validated');
     //sprawdzamy mail i formę
     if(!validateEmail(mail) || e.target.checkValidity() === false){
-        event.preventDefault(); //blokujemy
-        event.stopPropagation();
+        e.preventDefault(); //blokujemy
+        e.stopPropagation();
         $('#email').addClass('is-invalid'); //przeglądarka inaczej waliduje mail, nie wymaga ".xx" na końcu adresu
     }
     else{

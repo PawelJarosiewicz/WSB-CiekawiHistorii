@@ -1,42 +1,46 @@
-$(document).ready(function(){
-  //obsługa przycisków przełączających formy
-  $("#btnLogin").click(function(){
-    if($('#loginFrm').hasClass('collapse')){
-      $('#loginFrm').removeClass('collapse');
-      $('#newUserFrm').addClass('collapse');
-      $("#btnLogin").addClass('text-light myActiveBtn');
-      $('#btnNewUser').removeClass('text-light myActiveBtn');
-      $('#btnNewUser').addClass('myInActiveBtn');
-    }
-  });
-
-  $('#btnNewUser').click(function(){
-    if($('#newUserFrm').hasClass('collapse')){
-      $('#newUserFrm').removeClass('collapse');
-      $('#loginFrm').addClass('collapse');
-      $("#btnNewUser").addClass('text-light myActiveBtn');
-      $('#btnLogin').removeClass('text-light myActiveBtn');
-      $('#btnLogin').addClass('myInActiveBtn');
-    }
-  });
-
-  //logowanie
-  $('#loginFrm').submit(validateLogIn);
-  $('#loginEmail').on('input',checkEmail);
-  $('#loginPass').on('input',checkPass);
-
-  //nowy user
-  $('#newUserFrm').submit(validateNewUser);
-  $('#newUserName').on('input',checkName);
-  $('#newUserEmail').on('input',checkEmail); 
-  $('#newUserPass').on('input',checkPass);
-  $('#newUserPass2').on('input',checkPass2);
-
+$(document).ready(function(){ 
   //wylogowanie
   $('#navLogout').click(logOut);
 
+  //obsługa przycisków formularza usera
+  $('#btnChangeName').click(function(){
+    $(this).tooltip('hide');
+    $('#modalChangeName').modal();
+  });
+
+  $('#btnChangeMail').click(function(){
+    $(this).tooltip('hide');
+    $('#changeMailNewMail').on('input',checkEmail); //walidacja pola podczas wpisywania
+    $('#changeMailOldMail').on('input',checkEmail); 
+    $('#changeMailPass').on('input',checkPass);
+    $('#modalChangeMail').modal();
+  });
+
+  $('#btnChangePass').click(function(){
+    $(this).tooltip('hide');
+    $('#changePassNewPass').on('input',checkPass);
+    $('#changePassNewPass2').bind('input',{idFirstPass: '#changePassNewPass',idSecondPass: '#changePassNewPass2'},checkPass2);
+    $('#changePassMail').on('input',checkEmail); 
+    $('#changePassOldPass').on('input',checkPass);
+    $('#modalChangePass').modal();
+  });
+
   //podpowiedzi dla urządzeń mobilnych
   $(window).on('ready resize orientationchange',showPillToolTips); 
+
+  //sprawdzenie czy user jest zalogowany i wypełniamy formularz
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          currUser = user;
+          $('#userNameSpan').text(currUser.displayName);
+          $('#profileUserName').val(currUser.displayName);
+          $('#profileUserEmail').val(currUser.email);
+          $('#profileUserPass').val('######');         
+      } else {
+          currUser=null;
+          document.location.href='/user/login';
+      }
+    });
 });
 
 function showPillToolTips(){
@@ -55,150 +59,227 @@ function showPillToolTips(){
     }
   }
   catch(err){
-    console.log('Tooltip error: '+err);
+    console.error('Tooltip error: '+err);
   }
 }
 
-function checkPass(){
+function changeUserName(newName){
+  if(newName){
+    try{
+      if(currUser){
+        currUser.updateProfile({
+          displayName: newName
+        })
+        .then(function() {
+          $('#profileUserName').val(currUser.displayName);
+          showInfo('Zmiana imienia','Twoja imię zostało zmienione.');
+        })
+        .catch(function(error) {showError('Błąd '+error.code,error.message);});
+      } 
+    }
+    catch(err){
+      showError('Change name error',err);
+    }
+  }
+}
+
+function changeUserMail(e,idNewMail,idOldMail,idPass){
   try{
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
-      if($(this).val().length>5){
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-      }
-      else{
-        this.classList.remove('is-valid');
-        this.classList.add('is-invalid');
-      }
+    //weryfikacja formy
+    if($(idNewMail).val()=='' | !validateEmail($(idNewMail).val())){
+      $(idNewMail).addClass('is-invalid');
+    }
+    else{
+      $(idNewMail).removeClass('is-invalid');
+      $(idNewMail).addClass('is-valid');
+    }
+    if($(idOldMail).val()=='' | !validateEmail($(idOldMail).val())){
+      $(idOldMail).addClass('is-invalid');
+    }
+    else{
+      $(idOldMail).removeClass('is-invalid');
+      $(idOldMail).addClass('is-valid');
+    }
+    if($(idPass).val().length<6){
+      $(idPass).addClass('is-invalid');
+    }
+    else{
+      $(idPass).removeClass('is-invalid');
+      $(idPass).addClass('is-valid');
+    }
+
+    if($(idNewMail).hasClass('is-invalid') | $(idOldMail).hasClass('is-invalid') | $(idPass).hasClass('is-invalid')){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    else{
+      //ponownie uwierzytelniamy usera
+      let credentials = firebase.auth.EmailAuthProvider.credential($(idOldMail).val(), $(idPass).val());
+
+      currUser.reauthenticateWithCredential(credentials)
+      .then(function() {
+        //zmieniamy mail
+        currUser.updateEmail($(idNewMail).val())
+        .then(function() { 
+          showInfo("Zmiana adresu e-mail","Twój adres e-mail został zmieniony.");
+          $('#profileUserEmail').val(currUser.email);
+        })
+        .catch(function(error) {
+          showError('Błąd podczas zmiany adresu e-mail '+error.code,error.message);
+          $('#modalChangeMail').modal();
+        });
+      })
+      .catch(function(error) { 
+        decodeLogInError(error);
+        $('#modalChangeMail').modal();
+      });
+      
+      //czyścimy formę z klas walidacji
+      changeModalClear(idNewMail,idOldMail,idPass);
     }
   }
   catch(err){
-    console.log('Check password error: '+err);
+    showError('Change mail error',err);
   }
 }
 
-function checkPass2(){
+function changeUserPass(e,idNewPass,idNewPass2,idMail,idOldPass){
   try{
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
-      if($(this).val().length>5 & $(this).val()==$('#newUserPass').val()){
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-      }
-      else{
-        this.classList.remove('is-valid');
-        this.classList.add('is-invalid');
-      }
+    //weryfikacja formy
+    if($(idMail).val()=='' | !validateEmail($(idMail).val())){
+      $(idMail).addClass('is-invalid');
+    }
+    else{
+      $(idMail).removeClass('is-invalid');
+      $(idMail).addClass('is-valid');
+    }
+    if($(idNewPass).val().length<6){
+      $(idNewPass).addClass('is-invalid');
+    }
+    else{
+      $(idNewPass).removeClass('is-invalid');
+      $(idNewPass).addClass('is-valid');
+    }
+    if($(idOldPass).val().length<6){
+      $(idOldPass).addClass('is-invalid');
+    }
+    else{
+      $(idOldPass).removeClass('is-invalid');
+      $(idOldPass).addClass('is-valid');
+    }
+    if($(idNewPass2).val().length<6 || $(idNewPass).val()!=$(idNewPass2).val()){
+      $(idNewPass2).addClass('is-invalid');
+    }
+    else{
+      $(idNewPass2).removeClass('is-invalid');
+      $(idNewPass2).addClass('is-valid');
+    }
+
+    if($(idMail).hasClass('is-invalid') | $(idNewPass).hasClass('is-invalid') | $(idOldPass).hasClass('is-invalid') | $(idNewPass2).hasClass('is-invalid')){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    else{
+      //ponownie uwierzytelniamy usera
+      let credentials = firebase.auth.EmailAuthProvider.credential($(idMail).val(), $(idOldPass).val());
+
+      currUser.reauthenticateWithCredential(credentials)
+      .then(function() {
+        //zmieniamy mail
+        currUser.updatePassword($(idNewPass).val())
+        .then(function() { showInfo("Zmiana hasła","Twoje hasło zostało zmienione.");})
+        .catch(function(error) {
+          showError('Błąd podczas zmiany hasła '+error.code,error.message);
+          $('#modalChangePass').modal();
+        });
+      })
+      .catch(function(error) { 
+        decodeLogInError(error);
+        $('#modalChangePass').modal();
+      });
+      //czyścimy formę z klas walidacji
+      changeModalClear(idNewPass,idNewPass2,idMail,idOldPass);
     }
   }
   catch(err){
-    console.log('Check password error: '+err);
+    showError('Change password error',err);
   }
 }
 
-function checkName(){
+function deleteUser(e,idMail,idPass){
   try{
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
-      if($(this).val().length>2){
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-      }
-      else{
-        this.classList.remove('is-valid');
-        this.classList.add('is-invalid');
-      }
+    //wolidacja podczas wpisywania
+    $(idMail).on('input',checkEmail); 
+    $(idPass).on('input',checkPass);
+
+    //weryfikacja formy
+    if($(idMail).val()=='' | !validateEmail($(idMail).val())){
+      $(idMail).addClass('is-invalid');
+    }
+    else{
+      $(idMail).removeClass('is-invalid');
+      $(idMail).addClass('is-valid');
+    }
+    if($(idPass).val().length<6){
+      $(idPass).addClass('is-invalid');
+    }
+    else{
+      $(idPass).removeClass('is-invalid');
+      $(idPass).addClass('is-valid');
+    }
+    if($(idMail).hasClass('is-invalid') | $(idPass).hasClass('is-invalid')){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    else{
+      let credentials = firebase.auth.EmailAuthProvider.credential($(idMail).val(), $(idPass).val());
+
+      currUser.reauthenticateWithCredential(credentials)
+      .then(function() {
+        //zmieniamy mail
+        currUser.delete()
+        .then(function() { 
+          showInfo("Usuwanie konta","Twoje konto zostało usunięte.");
+        })
+        .catch(function(error) {
+          showError('Błąd podczas usuwania konta '+error.code,error.message);
+          $('#modalDelUser').modal();
+        });
+      })
+      .catch(function(error) { 
+        decodeLogInError(error);
+        $('#modalDelUser').modal();
+      });
+
+      changeModalClear(idMail,idPass);
     }
   }
   catch(err){
-    console.log('Check name error: '+err);
+    showError('Delete user error',err);
   }
 }
 
-function validateLogIn(e){
+//usunięcie klas walidujących formę
+function changeModalClear(id1,id2,id3,id4){
   try{
-    if($('#loginEmail').val()=='' | !validateEmail($('#loginEmail').val())){
-      $('#loginEmail').addClass('is-invalid');
+    if(id1){
+      $(id1).removeClass('is-invalid');
+      $(id1).removeClass('is-valid');
     }
-    else{
-      $('#loginEmail').removeClass('is-invalid');
-      $('#loginEmail').addClass('is-valid');
+    if(id2){
+      $(id2).removeClass('is-invalid');
+      $(id2).removeClass('is-valid');
     }
-    if($('#loginPass').val().length<6){
-      $('#loginPass').addClass('is-invalid');
+    if(id3){
+      $(id3).removeClass('is-invalid');
+      $(id3).removeClass('is-valid');
     }
-    else{
-      $('#loginPass').removeClass('is-invalid');
-      $('#loginPass').addClass('is-valid');
-    }
-
-    //dane niepoprawne - blokujemy
-    if($('#loginEmail').hasClass('is-invalid') | $('#loginPass').hasClass('is-invalid')){
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else{
-      //logujemy się...
-      alert('Logowanie');
-      e.target.submit();
+    if(id4){
+      $(id4).removeClass('is-invalid');
+      $(id4).removeClass('is-valid');
     }
   }
   catch(err){
-    console.log('Login error: '+err);
+    console.error('Change mail (clear modal) error: '+err);
   }
 }
-
-function validateNewUser(e){
-  try{
-    if($('#newUserEmail').val()=='' | !validateEmail($('#newUserEmail').val())){
-      $('#newUserEmail').addClass('is-invalid');
-    }
-    else{
-      $('#newUserEmail').removeClass('is-invalid');
-      $('#newUserEmail').addClass('is-valid');
-    }
-    if($('#newUserName').val().length<3){
-      $('#newUserName').addClass('is-invalid');
-    }
-    else{
-      $('#newUserName').removeClass('is-invalid');
-      $('#newUserName').addClass('is-valid');
-    }
-    if($('#newUserPass').val().length<6){
-      $('#newUserPass').addClass('is-invalid');
-    }
-    else{
-      $('#newUserPass').removeClass('is-invalid');
-      $('#newUserPass').addClass('is-valid');
-    }
-    if($('#newUserPass2').val().length<6 || $('#newUserPass').val()!=$('#newUserPass2').val()){
-      $('#newUserPass2').addClass('is-invalid');
-    }
-    else{
-      $('#newUserPass2').removeClass('is-invalid');
-      $('#newUserPass2').addClass('is-valid');
-    }
-
-    //dane niepoprawne - blokujemy
-    if($('#newUserEmail').hasClass('is-invalid') | $('#newUserName').hasClass('is-invalid') | $('#newUserPass').hasClass('is-invalid') | $('#newUserPass2').hasClass('is-invalid')){
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    else{
-      //logujemy się...
-      alert('Tworzymy user');
-      e.target.submit();
-    }
-  }
-  catch(err){
-    console.log('Create user error: '+err);
-  }
-}
-
-
-
-
-
-
-
-
-  
-  
