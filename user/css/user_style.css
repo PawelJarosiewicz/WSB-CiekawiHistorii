@@ -11,6 +11,7 @@
     transition: all 0.5s;
 }
 .myInActiveBtn:hover{
+    box-shadow: 4px 6px 20px #999;
     transform: translateY(-2px);
 }
 .myButton{

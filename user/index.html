@@ -46,8 +46,16 @@
                     <button type="button" class="btn text-muted myBtnSearch" ><i class="fas fa-search myIconSearch"></i></button>
                 </div>
             </div>
-        </form>
-        <a href="login" class="nav-link ml-2" id="btnLogIn" data-toggle="tooltip" data-html="true" title="<h6> Zaloguj się lub utwórz konto </h6>" ><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+          </form>
+          <a href="login" class="nav-link ml-2 myMnuUserItem" id="btnLogIn" data-toggle="tooltip" data-html="true" title="<h6>Zaloguj się lub utwórz konto</h6>" ><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+          <div class="btn-group collapse myMnuUserItem ml-2" id="btnMnuUser">
+            <a class="btn dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user text-info fa-lg mr-1"></i></a>
+            <div class="dropdown-menu dropdown-menu-md-right myNavDropdown">
+              <a class="dropdown-item text-light myMnuUserItem" href="#">Twoje konto</a>
+              <a class="dropdown-item text-light myMnuUserItem" href="#">Twoje artykuły</a>
+              <a class="dropdown-item text-light myMnuUserItem" href="#" id="mnuLogOut"><i class="fas fa-sign-out-alt text-danger fa-lg mr-2"></i>Wyloguj</a>
+            </div>
+          </div>
         </span>
       </div>
     </nav>
@@ -65,7 +73,7 @@
             <a class="nav-link text-body" id="navArticles" data-toggle="pill" href="#tabArticles" role="tab" aria-controls="tabArticles" aria-selected="false"><i class="far fa-newspaper text-muted fa-lg"></i><span class="myProfileLabel ml-2">Twoje artykuły</span></a>
           </li>
           <li class="nav-item myNavPill">
-            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#tabProfile" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wylogowanie</span></a>
+            <a class="nav-link text-body" id="navLogout" data-toggle="pill" href="#tabProfile" role="tab" aria-controls="tabLogout" aria-selected="false"><i class="fas fa-sign-out-alt text-danger fa-lg"></i><span class="myProfileLabel ml-2">Wyloguj</span></a>
           </li>
         </ul>
         <!-- zawartości zakładek -->

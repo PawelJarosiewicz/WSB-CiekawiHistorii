@@ -39,21 +39,23 @@ function validateSendContact(e){
             if(!currUser){
                 fetchPromises.push(firebaseLogInAnonymous());
             }
-            fetchPromises.push(saveContactMsg());
             Promise.all(fetchPromises).then(()=>{
-                if(documentRef){
-                    $("#m-title").html("Wiadomość przesłana");
-                    $("#m-body").html("Dziękujemy za przesłanie wiadomości.</br>Twoja wiadomości została zapiasna z identyfikatorem: "+documentRef.id);
-                    $("#m-OK").on('click',function(){e.target.submit();});
-                    $("#modal-info").modal('show');
-                    return true;
-                }
-                else{
-                    $("#m-title").html("Błąd");
-                    $("#m-body").html("Wysłanie wiadomści nie powiodło się. Spróbuj ponownie później");
-                    $("#modal-info").modal('show');
-                    return false;
-                }
+                fetchPromises.push(saveContactMsg());
+                Promise.all(fetchPromises).then(()=>{
+                    if(documentRef){
+                        $("#m-title").html("Wiadomość przesłana");
+                        $("#m-body").html("Dziękujemy za przesłanie wiadomości.</br>Twoja wiadomości została zapiasna z identyfikatorem: "+documentRef.id);
+                        $("#m-OK").on('click',function(){e.target.submit();});
+                        $("#modal-info").modal('show');
+                        return true;
+                    }
+                    else{
+                        $("#m-title").html("Błąd");
+                        $("#m-body").html("Wysłanie wiadomści nie powiodło się. Spróbuj ponownie później");
+                        $("#modal-info").modal('show');
+                        return false;
+                    }
+                });
             });
         }
         catch(err){

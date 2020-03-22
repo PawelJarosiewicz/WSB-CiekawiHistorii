@@ -32,10 +32,16 @@ $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
           currUser = user;
-          $('#userNameSpan').text(currUser.displayName);
-          $('#profileUserName').val(currUser.displayName);
-          $('#profileUserEmail').val(currUser.email);
-          $('#profileUserPass').val('######');         
+          if(currUser.isAnonymous){ //logowanie anonimowe
+            document.location.href='/user/login';
+          }
+          else{
+            $('#userNameSpan').text(currUser.displayName);
+            $('#profileUserName').val(currUser.displayName);
+            $('#profileUserEmail').val(currUser.email);
+            $('#profileUserPass').val('######'); 
+          }
+                  
       } else {
           currUser=null;
           document.location.href='/user/login';

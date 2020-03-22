@@ -9,9 +9,19 @@ $(document).ready(function(){
   firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
           currUser = user;
-          console.log('Logged user id='+currUser.uid);           
+          console.log('Logged user id='+currUser.uid); 
+          if(currUser.isAnonymous){
+            $('#btnMnuUser').addClass('collapse');
+            $('#btnLogIn').removeClass('collapse');
+          } 
+          else{
+            $('#btnMnuUser').removeClass('collapse'); //pokazujemy menu usera
+            $('#btnLogIn').addClass('collapse'); //ukrywamy przycisk logowania
+          }         
       } else {
           currUser=null;
+          $('#btnMnuUser').addClass('collapse');
+          $('#btnLogIn').removeClass('collapse'); 
           console.log('User not logged');
       }
     });
@@ -26,6 +36,9 @@ $(document).ready(function(){
   //podpowiedzi
   $('[data-toggle="tooltip"]').tooltip();
   // $('#btnLogIn').tooltip();
+
+  //wyloguj z głównego menu
+  $('#mnuLogOut').click(logOut);
 });
 
 function changeNavToggleIcon(){

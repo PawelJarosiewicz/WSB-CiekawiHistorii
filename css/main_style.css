@@ -9,7 +9,7 @@ body{
     min-height: 100vh;
 }
 .mainSection{
-    padding-bottom: 4rem;
+    padding-bottom: 5rem;
 }
 
 .myNav{
@@ -73,13 +73,13 @@ body{
     border-radius: 5px;
     
 }
-#btnLogIn{
+.myMnuUserItem{
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
 }
-#btnLogIn:hover{
+.myMnuUserItem:hover{
     background-color: rgb(40, 40, 100);
     border-radius: 5px;
 }
