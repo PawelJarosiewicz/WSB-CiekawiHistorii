@@ -33,12 +33,14 @@ $(document).ready(function(){
     console.error('Session persistence: '+error.code+' '+error.message);
   });
 
-  //podpowiedzi
-  $('[data-toggle="tooltip"]').tooltip();
-  // $('#btnLogIn').tooltip();
-
   //wyloguj z głównego menu
   $('#mnuLogOut').click(logOut);
+  if(!getCookie('cookieInfo')){
+    showCookieInfo();
+  }
+
+  //podpowiedzi - na końcu
+  $('[data-toggle="tooltip"]').tooltip();
 });
 
 function changeNavToggleIcon(){
@@ -49,6 +51,65 @@ function changeNavToggleIcon(){
   else{
     $('.fa-bars').addClass('collapse');
     $('.fa-times').removeClass('collapse');
+  }
+}
+
+function setCookie(name, val, days, path, domain, secure) {
+  if (navigator.cookieEnabled) { //czy ciasteczka są włączone
+      const cookieName = encodeURIComponent(name);
+      const cookieVal = encodeURIComponent(val);
+      let cookieText = cookieName + "=" + cookieVal;
+
+      if (typeof days === "number") {
+          const data = new Date();
+          data.setTime(data.getTime() + (days * 24*60*60*1000));
+          cookieText += "; expires=" + data.toGMTString();
+      }
+      if (path) {
+          cookieText += "; path=" + path;
+      }
+      if (domain) {
+          cookieText += "; domain=" + domain;
+      }
+      if (secure) {
+          cookieText += "; secure";
+      }
+      document.cookie = cookieText;
+  }
+}
+
+function getCookie(name) {
+  if (document.cookie !== "") {
+      const cookies = document.cookie.split(/; */);
+
+      for (let i=0; i<cookies.length; i++) {
+          const cookieName = cookies[i].split("=")[0];
+          const cookieVal = cookies[i].split("=")[1];
+          if (cookieName === decodeURIComponent(name)) {
+              return decodeURIComponent(cookieVal);
+          }
+      }
+  }
+}
+
+function showCookieInfo(){
+  try{
+    let cookieTemplate= document.createElement('div');
+    cookieTemplate.setAttribute('id', 'cookieInfo');
+    cookieTemplate.setAttribute('class', 'container-fluid bg-dark text-light collapse show p-1');
+    cookieTemplate.innerHTML='<h6 class="m-1"> Korzystanie z niniejszej witryny oznacza zgodę na wykorzystywanie plików cookies.</h6>' +
+      '<p class="text-justify mx-1 my-0">Używamy informacji zapisanych za pomocą plików cookies w celu zapewnienia maksymalnej wygody w korzystaniu z naszego serwisu. Zmiany warunków przechowywania lub uzyskiwania dostępu do plików cookies można dokonać w każdym czasiew swojej przeglądarce.</p>' +
+      '<span class="mx-3"><a href="http://wszystkoociasteczkach.pl/" target="_blank" title="Odwiedź (link zewnętrzny): wszystkoociasteczkach.pl" class="px-2" data-toggle="tooltip">więcej informacji</a></span><span><button type="button" class="close text-light px-2" data-toggle="collapse" data-target="#cookieInfo" title="zamknij">&times;</button></span>';
+    document.body.appendChild(cookieTemplate);
+    
+    $('#cookieInfo button').first().on('click',function(){
+      $(this).tooltip('hide');
+      setCookie('cookieInfo',true,365,'/');
+      $('#cookieInfo').addClass('collapse');
+    });
+  }
+  catch(err){
+    console.error('Show cookie info error: '+err);
   }
 }
 

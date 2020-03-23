@@ -113,11 +113,37 @@ body{
     /* height: 4rem; */
 }
 
+#cookieInfo {
+    font-family: Arial, Verdana, sans-serif;
+    position: fixed;
+    z-index: 110;
+    bottom: 1%;
+    left: 2%;
+    width: 60%;
+    border-radius: 15px;
+}
+#cookieInfo h6{
+    font-size: 0.75em;
+}
+#cookieInfo p{
+    font-size: 0.7em;
+}
+#cookieInfo a{
+    font-size: 0.7em;
+}
+#cookieInfo a:hover{
+    background-color: #ccc;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 0.4em;
+}
+
 /* duże ekrany */
 @media only screen and (min-width:1200px){
     .mySidebarRight{
         width: 300px;
     }
+
     .myContainer{
         font-size: 1.1em;
         padding-left: 7%;
@@ -128,12 +154,22 @@ body{
     .mySidebarContent{
         font-size: 1em;
     }
+    #cookieInfo{
+        width: 70%;
+    }
+}
+@media only screen and (max-width:850px){
+    .inputSearch{
+        max-width: 200px;
+    }
 }
 /* Laptop -> tablet */
-@media only screen and (max-width:900px) and (min-width:768px){
+@media only screen and (max-width:800px){
     .inputSearch{
         max-width: 150px;
     }
+}
+@media only screen and (min-width:768px){
     .myContainer{
         font-size: 1em;
     }
@@ -148,6 +184,9 @@ body{
     }
     .myModal{
         font-size: 0.9em;
+    }
+    #cookieInfo{
+        width: 80%;
     }
 }
 /* Tablet -> Mobile L,M */
@@ -176,6 +215,9 @@ body{
     .myModal{
         font-size: 0.9em;
     }
+    #cookieInfo{
+        width: 95%;
+    }
 }
 /* Mobile S */
 @media only screen and (max-width:320px){
@@ -199,5 +241,8 @@ body{
     }
     .myModal{
         font-size: 0.9em;
+    }
+    #cookieInfo {
+        width: 95%;
     }
 }

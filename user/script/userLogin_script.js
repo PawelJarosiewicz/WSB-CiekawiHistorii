@@ -32,6 +32,12 @@ $(document).ready(function(){
   $('#newUserPass').on('input',checkPass);
   //podpięcie funkcji z przekazaniem parametrów
   $('#newUserPass2').bind('input',{idFirstPass: '#newUserPass',idSecondPass: '#newUserPass2'},checkPass2);
+
+  //sprawdzamy cookie
+  let cookieVal = getCookie('userMail');
+  if(cookieVal){
+    $('#loginEmail').val(cookieVal);
+  }
 });
 
 function checkPass(){
@@ -124,6 +130,9 @@ function validateLogIn(e){
       fetchPromises.push(lu);
       Promise.all(fetchPromises).then(()=>{
         if(currUser){
+          if($('#loginCheck').is(':checked') ){  //zapamiętujemy login jeśli zaznaczono
+            setCookie('userMail',$('#loginEmail').val(),365,'/');
+          }
           window.location.href = '/user';
         }
       });

@@ -3,6 +3,9 @@ var documentRef;    //odnośnik do zapisanego dokumentu
 $(document).ready(function(){  
     //kontrola wartości pól formy
     $('#email').on('input',checkEmail); 
+    $('#name').on('input',checkFieldEmpty); 
+    $('#subject').on('input',checkFieldEmpty); 
+    $('#msg').on('input',checkFieldEmpty); 
   });
 
 function saveContactMsg(){
@@ -22,18 +25,19 @@ function saveContactMsg(){
 
 
 function validateSendContact(e){
+    //kontrola poprawności danych formy
+    checkFieldEmptyById(document.getElementById('name'));
+    checkFieldEmptyById(document.getElementById('subject'));
+    checkFieldEmptyById(document.getElementById('msg'));
     let mail = document.getElementById('email').value;
-    e.target.classList.add('was-validated');
-    //sprawdzamy mail i formę
-    if(!validateEmail(mail) || e.target.checkValidity() === false){
+
+    if(!validateEmail(mail) | $('#name').hasClass('is-invalid') | $('#subject').hasClass('is-invalid') | $('#msg').hasClass('is-invalid')){
         e.preventDefault(); //blokujemy
         e.stopPropagation();
         $('#email').addClass('is-invalid'); //przeglądarka inaczej waliduje mail, nie wymaga ".xx" na końcu adresu
     }
     else{
         try{
-            e.target.classList.remove('was-validated');
-            $('#email').removeClass('is-valid');
             const fetchPromises = [];   //zmienna do przechowywania operacji w toku
             e.preventDefault(); //zatrzymujemy domyślne działanie formy
             if(!currUser){
@@ -62,5 +66,26 @@ function validateSendContact(e){
             console.log('błąd: ',err);
             return false;
         } 
+    }
+}
+
+function checkFieldEmpty(){
+    if($(this).val()==''){
+        $(this).addClass('is-invalid');
+      }
+    else{
+        $(this).removeClass('is-invalid');
+        $(this).addClass('is-valid');
+    }
+}
+function checkFieldEmptyById(controlId){
+    if(controlId){
+        if($(controlId).val()==''){
+            $(controlId).addClass('is-invalid');
+          }
+        else{
+            $(controlId).removeClass('is-invalid');
+            $(controlId).addClass('is-valid');
+        }
     }
 }
