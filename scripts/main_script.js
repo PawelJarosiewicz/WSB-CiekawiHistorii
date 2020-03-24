@@ -165,22 +165,30 @@ function showError(sHeader,sBody){
 
 function showInfo(sHeader,sBody,sFunction){
   try{
-    let modalTemplate =
-    '<div class="modal fade">' +
-        '<div class="modal-dialog">' +
-            '<div class="modal-content">' +
-                '<div class="modal-header text-info">' +
-                    '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
-                    '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
-                '</div>' +
-                '<div class="modal-body myModal">' +sBody+'</div>' +
-                '<div class="modal-footer ">' +
-                    '<button type="button" class="btn btn-info myModal" data-dismiss="modal" onclick="sFunction()">OK</button>' +
-                '</div>' +
-            '</div>' +
-        '</div>' +
-    '</div>';
-    $(modalTemplate).modal();
+    let modalTemplate = document.createElement('div');
+    modalTemplate.setAttribute('id', 'm-Info');
+    modalTemplate.setAttribute('class','modal fade');
+    modalTemplate.innerHTML= '<div class="modal-dialog">' +
+                                '<div class="modal-content">' +
+                                    '<div class="modal-header text-info">' +
+                                        '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
+                                        '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
+                                    '</div>' +
+                                    '<div class="modal-body myModal">' +sBody+'</div>' +
+                                    '<div class="modal-footer ">' +
+                                        '<button type="button" class="btn btn-info myModal" data-dismiss="modal" id="btnOK">OK</button>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>';
+
+    if($('#m-Info').length>0){
+      $('#m-Info').remove();  //jeśli element istnieje -> usuwamy
+    }
+    document.body.appendChild(modalTemplate); //podpinamy strukturę okna modalnego
+    if(typeof sFunction == 'function'){ //została przekazana funkcja -> podpinamy pod button
+      $('#btnOK').on('click',sFunction); 
+    }
+    $('#m-Info').modal('show');
   }
   catch(err){
     console.error('Show modal error: '+err);

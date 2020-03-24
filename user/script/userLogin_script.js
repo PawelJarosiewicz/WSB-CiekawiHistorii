@@ -33,12 +33,45 @@ $(document).ready(function(){
   //podpięcie funkcji z przekazaniem parametrów
   $('#newUserPass2').bind('input',{idFirstPass: '#newUserPass',idSecondPass: '#newUserPass2'},checkPass2);
 
+  //reset hasła
+  $('#resetPassEmail').on('input',checkEmail);
+  $('#resetPassFrm').submit(validateResetPass);
+
   //sprawdzamy cookie
   let cookieVal = getCookie('userMail');
   if(cookieVal){
     $('#loginEmail').val(cookieVal);
+    $('#loginCheck').attr('checked','true');
   }
 });
+
+function validateResetPass(e){
+  try{
+    if($('#resetPassEmail').val()=='' | !validateEmail($('#resetPassEmail').val())){
+      $('#resetPassEmail').addClass('is-invalid');
+    }
+    else{
+      $('#resetPassEmail').removeClass('is-invalid');
+      $('#resetPassEmail').addClass('is-valid');
+    }
+    if($('#resetPassEmail').hasClass('is-invalid')){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    else{
+      e.preventDefault();
+      let auth = firebase.auth();
+      let res=auth.sendPasswordResetEmail($('#resetPassEmail').val()).then(function() {
+        showInfo('E-mail wysłany','Na podany adres e-mail została wysłana wiadomość. Postępuj zgodnie z poleceniami zawartymi w wiadomości.',function(){e.target.submit();});
+        
+      })
+      .catch(function(error) { showError('Błąd '+error.code,error.message); });
+    }
+  }
+  catch(err){
+    console.log('Reset password error: '+err);
+  }
+}
 
 function checkPass(){
   try{
