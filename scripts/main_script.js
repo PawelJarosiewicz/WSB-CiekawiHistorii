@@ -38,6 +38,7 @@ $(document).ready(function(){
   if(!getCookie('cookieInfo')){
     showCookieInfo();
   }
+  showCookieInfo();
 
   //podpowiedzi - na końcu
   $('[data-toggle="tooltip"]').tooltip();
@@ -98,11 +99,11 @@ function showCookieInfo(){
     cookieTemplate.setAttribute('id', 'cookieInfo');
     cookieTemplate.setAttribute('class', 'container-fluid bg-dark text-light collapse show p-1');
     cookieTemplate.innerHTML='<h6 class="m-1"> Korzystanie z niniejszej witryny oznacza zgodę na wykorzystywanie plików cookies.</h6>' +
-      '<p class="text-justify mx-1 my-0">Używamy informacji zapisanych za pomocą plików cookies w celu zapewnienia maksymalnej wygody w korzystaniu z naszego serwisu. Zmiany warunków przechowywania lub uzyskiwania dostępu do plików cookies można dokonać w każdym czasiew swojej przeglądarce.</p>' +
-      '<span class="mx-3"><a href="http://wszystkoociasteczkach.pl/" target="_blank" title="Odwiedź (link zewnętrzny): wszystkoociasteczkach.pl" class="px-2" data-toggle="tooltip">więcej informacji</a></span><span><button type="button" class="close text-light px-2" data-toggle="collapse" data-target="#cookieInfo" title="zamknij">&times;</button></span>';
+      '<p class="text-justify mx-1 my-0">Używamy informacji zapisanych za pomocą plików cookies w celu zapewnienia maksymalnej wygody w korzystaniu z naszego serwisu. Zmiany warunków przechowywania lub uzyskiwania dostępu do plików cookies można dokonać w każdym czasie w swojej przeglądarce.</p>' +
+      '<span class="mx-3 d-flex justify-content-between"><a href="http://wszystkoociasteczkach.pl/" target="_blank" title="Odwiedź (link zewnętrzny): wszystkoociasteczkach.pl" class="px-2" data-toggle="tooltip">więcej informacji</a><a href="#" class="px-2" data-toggle="collapse" data-target="#cookieInfo" title="zamknij">zamknij</a></span>';
     document.body.appendChild(cookieTemplate);
     
-    $('#cookieInfo button').first().on('click',function(){
+    $('#cookieInfo [data-toggle="collapse"]').first().on('click',function(){
       $(this).tooltip('hide');
       setCookie('cookieInfo',true,365,'/');
       $('#cookieInfo').addClass('collapse');
@@ -225,8 +226,7 @@ function validateEmail(email)
 
 function checkEmail(){
   try{
-    //werfyikacja uruchamiana tylko wtedy gdy już pole zostało pierwszy raz sprawdzone
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
+    if($(this).val()!=''){
       if(validateEmail(this.value)){
         this.classList.remove('is-invalid');
         this.classList.add('is-valid');

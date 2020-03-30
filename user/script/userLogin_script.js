@@ -61,7 +61,7 @@ function validateResetPass(e){
     else{
       e.preventDefault();
       let auth = firebase.auth();
-      let res=auth.sendPasswordResetEmail($('#resetPassEmail').val()).then(function() {
+      auth.sendPasswordResetEmail($('#resetPassEmail').val()).then(function() {
         showInfo('E-mail wysłany','Na podany adres e-mail została wysłana wiadomość. Postępuj zgodnie z poleceniami zawartymi w wiadomości.',function(){e.target.submit();});
         
       })
@@ -75,15 +75,13 @@ function validateResetPass(e){
 
 function checkPass(){
   try{
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
-      if($(this).val().length>5){
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-      }
-      else{
-        this.classList.remove('is-valid');
-        this.classList.add('is-invalid');
-      }
+    if($(this).val().length>5){
+      this.classList.remove('is-invalid');
+      this.classList.add('is-valid');
+    }
+    else{
+      this.classList.remove('is-valid');
+      this.classList.add('is-invalid');
     }
   }
   catch(err){
@@ -95,15 +93,13 @@ function checkPass2(event){
   try{
     let fp = event.data.idFirstPass;
     let sp = event.data.idSecondPass;
-    if($(sp).hasClass('is-invalid') || $(sp).hasClass('is-valid')){
-      if($(sp).val().length>5 & $(sp).val()==$(fp).val()){
-        $(sp).removeClass('is-invalid');
-        $(sp).addClass('is-valid');
-      }
-      else{
-        $(sp).removeClass('is-valid');
-        $(sp).addClass('is-invalid');
-      }
+    if($(sp).val().length>5 & $(sp).val()==$(fp).val()){
+      $(sp).removeClass('is-invalid');
+      $(sp).addClass('is-valid');
+    }
+    else{
+      $(sp).removeClass('is-valid');
+      $(sp).addClass('is-invalid');
     }
   }
   catch(err){
@@ -113,15 +109,13 @@ function checkPass2(event){
 
 function checkName(){
   try{
-    if($(this).hasClass('is-invalid') || $(this).hasClass('is-valid')){
-      if($(this).val().length>2){
-        this.classList.remove('is-invalid');
-        this.classList.add('is-valid');
-      }
-      else{
-        this.classList.remove('is-valid');
-        this.classList.add('is-invalid');
-      }
+    if($(this).val().length>2){
+      this.classList.remove('is-invalid');
+      this.classList.add('is-valid');
+    }
+    else{
+      this.classList.remove('is-valid');
+      this.classList.add('is-invalid');
     }
   }
   catch(err){
@@ -130,6 +124,7 @@ function checkName(){
 }
 
 function validateLogIn(e){
+  let btn = $(this).find('[type="submit"]');
   try{
     if($('#loginEmail').val()=='' | !validateEmail($('#loginEmail').val())){
       $('#loginEmail').addClass('is-invalid');
@@ -154,10 +149,17 @@ function validateLogIn(e){
     else{
       //logujemy się...
       e.preventDefault();
+      //animacja na przycisku
+      $(btn).html('<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Logowanie...');
+      $(btn).removeClass('btn-outline-success');
+      $(btn).addClass('btn-success');
       const fetchPromises = [];
       let lu=firebase.auth().signInWithEmailAndPassword($('#loginEmail').val(), $('#loginPass').val())
       .catch(function(error) {
         decodeLogInError(error);
+        $(btn).html('Zaloguj się');
+        $(btn).addClass('btn-outline-success');
+        $(btn).removeClass('btn-success');
       });
 
       fetchPromises.push(lu);
@@ -173,6 +175,9 @@ function validateLogIn(e){
   }
   catch(err){
     showError('Login error: '+err);
+    $(btn).html('Zaloguj się');
+    $(btn).addClass('btn-outline-success');
+    $(btn).removeClass('btn-success');
   }
 }
 
@@ -192,6 +197,7 @@ function decodeLogInError(err){
 }
 
 function validateNewUser(e){
+  let btn = $(this).find('[type="submit"]');
   try{
     if($('#newUserEmail').val()=='' | !validateEmail($('#newUserEmail').val())){
       $('#newUserEmail').addClass('is-invalid');
@@ -230,6 +236,10 @@ function validateNewUser(e){
     else{
       //towrzymy konto...
       e.preventDefault();
+      //animacja
+      $(btn).html('<span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>Tworzenie konta...');
+      $(btn).removeClass('btn-outline-success');
+      $(btn).addClass('btn-success');
       const fetchPromises = [];
       let cu = firebase.auth().createUserWithEmailAndPassword($('#newUserEmail').val(), $('#newUserPass').val())
       .catch(function(error) {
@@ -238,7 +248,10 @@ function validateNewUser(e){
         }
         else{
           showError('Błąd '+error.code,error.message);
-        }    
+        }
+        $(btn).html('Utwórz konto');
+        $(btn).addClass('btn-outline-success');
+        $(btn).removeClass('btn-success');    
       });
       fetchPromises.push(cu);
 
@@ -247,6 +260,9 @@ function validateNewUser(e){
           let un = currUser.updateProfile({ displayName: $('#newUserName').val() })
           .catch(function(error) {
             console.error(error.code,error.message);
+            $(btn).html('Utwórz konto');
+            $(btn).addClass('btn-outline-success');
+            $(btn).removeClass('btn-success');
           });
           fetchPromises.push(un);
           Promise.all(fetchPromises).then(()=>{ window.location.href = '/user'; });
@@ -255,7 +271,10 @@ function validateNewUser(e){
     }
   }
   catch(err){
-    console.log('Create user error: '+err);
+    showError('Create user error: '+err);
+    $(btn).html('Utwórz konto');
+    $(btn).addClass('btn-outline-success');
+    $(btn).removeClass('btn-success');
   }
 }
 

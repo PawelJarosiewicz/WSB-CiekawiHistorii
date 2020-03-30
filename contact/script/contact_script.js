@@ -40,6 +40,10 @@ function validateSendContact(e){
         try{
             const fetchPromises = [];   //zmienna do przechowywania operacji w toku
             e.preventDefault(); //zatrzymujemy domyślne działanie formy
+            //animacja na czas wysyłania wiadomości
+            $('#btnSubmit').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Wysyłanie...');
+            $('#btnSubmit').removeClass('btn-outline-dark');
+            $('#btnSubmit').addClass('btn-dark');
             if(!currUser){
                 fetchPromises.push(firebaseLogInAnonymous());
             }
@@ -51,19 +55,28 @@ function validateSendContact(e){
                         $("#m-body").html("Dziękujemy za przesłanie wiadomości.</br>Twoja wiadomości została zapiasna z identyfikatorem: "+documentRef.id);
                         $("#m-OK").on('click',function(){e.target.submit();});
                         $("#modal-info").modal('show');
+                        $('#btnSubmit').html('Wyślij');
+                        $('#btnSubmit').addClass('btn-outline-dark');
+                        $('#btnSubmit').removeClass('btn-dark');
                         return true;
                     }
                     else{
                         $("#m-title").html("Błąd");
                         $("#m-body").html("Wysłanie wiadomści nie powiodło się. Spróbuj ponownie później");
                         $("#modal-info").modal('show');
+                        $('#btnSubmit').html('Wyślij');
+                        $('#btnSubmit').addClass('btn-outline-dark');
+                        $('#btnSubmit').removeClass('btn-dark');
                         return false;
                     }
                 });
             });
         }
         catch(err){
-            console.log('błąd: ',err);
+            $('#btnSubmit').html('Wyślij');
+            $('#btnSubmit').addClass('btn-outline-dark');
+            $('#btnSubmit').removeClass('btn-dark');
+            showError('Contact msg error: ',err);
             return false;
         } 
     }

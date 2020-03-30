@@ -286,6 +286,6 @@ function changeModalClear(id1,id2,id3,id4){
     }
   }
   catch(err){
-    console.error('Change mail (clear modal) error: '+err);
+    console.error('Clear modal error: '+err);
   }
 }
