@@ -1,4 +1,5 @@
 var currUser;   //zmienna globalna do przechowywania info o zalogowanym użytkowniku
+var docArticle; //zapisany dokument w bazie
 
 $(document).ready(function(){
   //zmiana ikony dla przycisku przełączającego menu
@@ -263,5 +264,22 @@ function checkFieldEmptyById(controlId){
           $(controlId).removeClass('is-invalid');
           $(controlId).addClass('is-valid');
       }
+  }
+}
+
+function clearFieldInvalidState(){
+  if($(this).hasClass('is-invalid')){
+    if(this.nodeName=='DIV'){
+      if(this.innerText!=''){
+        $(this).removeClass('is-invalid');
+        $(this).removeClass('is-valid');
+      }      
+    }
+    else {
+      if($(this).val()!=''){
+        $(this).removeClass('is-invalid');
+        $(this).removeClass('is-valid');
+      }
+    }
   }
 }

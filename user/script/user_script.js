@@ -1,6 +1,7 @@
 $(document).ready(function(){ 
   //wylogowanie
   $('#navLogout').click(logOut);
+  $('#navAddArticles').click(function(){document.location.href='/edit-article'});
 
   //obsługa przycisków formularza usera
   $('#btnChangeName').click(function(){
@@ -26,7 +27,8 @@ $(document).ready(function(){
   });
 
   //podpowiedzi dla urządzeń mobilnych
-  $(window).on('ready resize orientationchange',showPillToolTips); 
+  $(window).on('resize orientationchange',showPillToolTips); 
+  showPillToolTips();
 
   //sprawdzenie czy user jest zalogowany i wypełniamy formularz
   firebase.auth().onAuthStateChanged(function(user) {
@@ -47,6 +49,12 @@ $(document).ready(function(){
           document.location.href='/user/login';
       }
     });
+  
+  //przekierowanie do konkretnej zakładki
+  let tab = window.location.hash;
+  if(tab){
+    $(tab).click();
+  }
 });
 
 function showPillToolTips(){
@@ -54,6 +62,7 @@ function showPillToolTips(){
     if($(window).width()<=768){
       $('[data-toggle="pill"]').attr('data-html',true);
       $('#navProfile').attr('title','<h6>Twój profil</h6>');
+      $('#navAddArticles').attr('title','<h6>Dodaj artykuł</h6>');
       $('#navArticles').attr('title','<h6>Twój artykuły</h6>');
       $('#navLogout').attr('title','<h6>Wyloguj...</h6>');
       $('[data-toggle="pill"]').tooltip();

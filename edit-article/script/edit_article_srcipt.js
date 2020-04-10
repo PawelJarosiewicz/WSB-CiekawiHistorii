@@ -6,14 +6,16 @@ $(document).ready(function(){
         if (user) {
             currUser = user;
             if(currUser.isAnonymous){ //logowanie anonimowe
-            //   document.location.href='/user/login';
+              $('#anonymousUserInfo').removeAttr('hidden');
             }
             else{
+              $('#loggedUserInfo').removeAttr('hidden');
+              $('form').removeAttr('hidden');
             }
                     
         } else {
             currUser=null;
-            // document.location.href='/user/login';
+            $('#anonymousUserInfo').removeAttr('hidden');
         }
       });
     
@@ -34,6 +36,7 @@ $(document).ready(function(){
         else{
           caretPos=null;
         }
+        $("#eLink").tooltip('hide');
         $('#modalLink').modal('show'); 
       });
       $('#urlLink').on('input',checkFieldEmpty);
@@ -47,15 +50,199 @@ $(document).ready(function(){
       $('#eAlignRight').click(function(){document.execCommand('justifyRight',false,null)});
       $('#eJustify').click(function(){document.execCommand('justifyFull',false,null)});
 
-      $('#artFrmCheck').click(changeSubmitBtnInfo);
+      $('#artPublicLabel').click(function(){
+        document.getElementById('artPublic').checked=!document.getElementById('artPublic').checked;
+        changeSubmitBtnInfo();
+      });
       $('#artPublic').change(changeSubmitBtnInfo);
+      
+      $('#artTitle').bind('input',clearFieldInvalidState);
+      $('#artTags').bind('input',clearFieldInvalidState);
+      $('#artEra').bind('input',clearFieldInvalidState);
+      $('#editor').bind('input',clearFieldInvalidState);
   });
 
-  function changeSubmitBtnInfo(){
+  function saveArticle(e){
+    let btn = document.getElementById('artSave');
+    let public = document.getElementById('artPublic');
     try{
-      let btn = document.getElementById('artSave');
-      document.getElementById('artPublic').checked=!document.getElementById('artPublic').checked; 
-      if(document.getElementById('artPublic').checked)
+      let title = document.getElementById('artTitle');
+      let tags = document.getElementById('artTags');
+      let era = document.getElementById('artEra');
+      let artText = document.getElementById('editor');
+      if(public.checked){
+        //publikacja -> sprawdzamy czy wszystkie pola są wypełnione
+        checkFieldEmptyById(document.getElementById(title.id));
+        checkFieldEmptyById(document.getElementById(tags.id));
+        if(era.value==0){
+          $(era).addClass('is-invalid');
+          $(era).removeClass('is-valid');
+        }
+        else{
+          $(era).addClass('is-valid');
+          $(era).removeClass('is-invalid');
+        }
+        if(artText.innerHTML==''){
+          $(artText).addClass('is-invalid');
+          $(artText).removeClass('is-valid');
+        }
+        else{
+          $(artText).addClass('is-valid');
+          $(artText).removeClass('is-invalid');
+        }
+      }
+      if($(title).hasClass('is-invalid') | $(tags).hasClass('is-invalid') | $(era).hasClass('is-invalid') | $(artText).hasClass('is-invalid')){
+        showError('Błędne dane w formularzu','Nie wszystkie pola w formularzu zostały wypełnione.');
+        return false;
+      }
+      else{
+        e.preventDefault();
+        //wstawiamy animację na przycisk
+        if(public.checked){
+          $(btn).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Publikowanie i zapisywanie...');
+          $(btn).removeClass('btn-outline-success');
+          $(btn).addClass('btn-success');
+        }
+        else{
+          $(btn).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Zapisywanie...');
+          $(btn).removeClass('btn-outline-primary');
+          $(btn).addClass('btn-primary');
+        }
+
+        //zapis do bazy
+        let pubDate='';
+        if(public.checked){
+          if(docArticle){ //artykuł był publikowany -> nie zmieniamy daty
+            if(docArticle.PublicDate){
+              pubDate = docArticle.PublicDate;
+            }
+            else{
+              pubDate = (new Date()).toISOString();
+            }
+          }
+          else{
+            pubDate = (new Date()).toISOString();
+          }
+        }
+        else{
+          pubDate='';
+        }
+        let article={
+          Title: title.value,
+          Tags: tags.value,
+          Era: era.value,
+          ArticleText: artText.innerHTML,
+          Public: public.checked,
+          UserId: currUser.uid,
+          UserMail: currUser.email,
+          UserName: currUser.displayName,
+          PublicDate: pubDate,
+          ModifyDate: (new Date()).toISOString()
+        }
+        const fetchPromises = []; 
+        fetchPromises.push(saveArticleToDB(article));
+        Promise.all(fetchPromises).then(()=>{
+          if(docArticle){
+            showInfo('Artykuł zapisany','Artykuł został zapisany z identyfikatorem: '+docArticle.id);
+          }
+        });
+        if(public.checked){
+          $(btn).html('Opublikuj i zapisz');
+          $(btn).addClass('btn-outline-success');
+          $(btn).removeClass('btn-success');
+        }
+        else{
+          $(btn).html('Zapisz');
+          $(btn).addClass('btn-outline-primary');
+          $(btn).removeClass('btn-primary');
+        }
+        $(title).removeClass('is-valid');
+        $(tags).removeClass('is-valid');
+        $(era).removeClass('is-valid');
+        $(artText).removeClass('is-valid');
+      }
+    }
+    catch(err){
+      //przywracamy status przycisku zapisywanie      
+      if(public.checked){
+        $(btn).html('Opublikuj i zapisz');
+        $(btn).addClass('btn-outline-success');
+        $(btn).removeClass('btn-success');
+      }
+      else{
+        $(btn).html('Zapisz');
+        $(btn).addClass('btn-outline-primary');
+        $(btn).removeClass('btn-primary');
+      }
+      showError('Error (save article)',err);
+      return false;
+    }
+  }
+
+  function loadFrmArticle(article){
+    try{
+      $('#artTitle').val(article.Title);
+      $('#artTags').val(article.Tags);
+      $('#artEra').val(article.Era);
+      $('#editor').html(article.ArticleText);
+      document.getElementById('artPublic').checked = article.Public;
+      changeSubmitBtnInfo();
+    }
+    catch(err){
+      showError('Error',err);
+    }
+  }
+
+  function saveArticleToDB(article){
+    if(docArticle){ //artukuł istnieje -> update
+      let doc = db.collection("Articles").doc(docArticle.id);
+      return doc.update(article)
+          .catch(function(error) {
+            docArticle=null;
+            showError('Error (modify article in db): ',error);
+          });
+    }
+    else{ //dodajemy nowy
+      return db.collection("Articles").add(article)
+          .then(function(docRef) { 
+            docArticle = docRef; 
+            setDocObserver(docArticle.id);
+          })
+          .catch(function(error) {
+            docArticle=null;
+            showError('Error (add article to db): ',error);
+          });
+    }
+}
+
+function setDocObserver(docId){
+  try{
+    db.collection("Articles").doc(docId)
+    .onSnapshot(function(doc) { 
+      docArticle = doc;
+      //daty modyfikacji artykułu
+      if(docArticle.data().PublicDate){
+        $('#artDateInfo').html('Data publikacji: '+docArticle.data().PublicDate);
+      }
+      let dateInfo = $('#artDateInfo').html();
+      if(dateInfo){
+        dateInfo=dateInfo+', data modyfikacji: '+docArticle.data().ModifyDate;
+      }
+      else{
+        dateInfo='Data modyfikacji: '+docArticle.data().ModifyDate;
+      }
+      $('#artDateInfo').html(dateInfo);
+    });
+  }
+  catch(err){
+    showError('Error',err);
+  }
+}
+
+function changeSubmitBtnInfo(){
+  try{
+    let btn = document.getElementById('artSave');
+    if(document.getElementById('artPublic').checked)
       {
         $(btn).text("Opublikuj i zapisz");
         $(btn).removeClass('btn-outline-primary');
@@ -67,28 +254,28 @@ $(document).ready(function(){
         $(btn).removeClass('btn-outline-success');
         $(btn).addClass('btn-outline-primary');
       }
+  }
+  catch(err){
+    showError('Error',err);
+  }
+}
+
+function showSelectedEraInfo(){
+    try{
+        let era = $(this).val();
+        let info=$('#eraInfo');
+        switch(era){
+            case 'Starożytność': $(info).text('Zaczęła się około XXX w. p.n.e., pojawiło się wtedy pismo. Zakończyła się pod koniec V w. n.e., wydarzeniem umownym jest rok 476, kiedy barbarzyńcy podbili Cesarstwo Rzymskie.'); break;
+            case 'Średniowiecze': $(info).text('Rozpoczęło się w drugiej połowie V w. n.e., (podbicie Cesarstwa Rzymskiego przez barbarzyńców). Epoka ta zakończyła się w 2 połowie XV w. (zdobycie Cesarstwa Bizantyjskiego przez Turków w 1453r.).'); break;
+            case 'Nowożytność': $(info).text('Nowożytność rozpoczęła się w 2 połowie XV w. Epoka ta kończy się w 1914r. (wybuch I wojny światowej).');break;
+            case 'Czasy współczesne': $(info).text('Czasy współczesne rozpoczęły się w 1918r. (zakończenie I wojny światowej) i trwa po dzień dzisiejszy.'); break;
+            default: $(info).text('Wskaż okres, którego dotyczy artykuł.');
+        }
     }
     catch(err){
-      showError('Error',err);
+      showError('Era info error',err);
     }
-  }
-
-  function showSelectedEraInfo(){
-      try{
-          let era = $(this).val();
-          let info=$('#eraInfo');
-          switch(era){
-              case 'Starożytność': $(info).text('Zaczęła się około XXX w. p.n.e., pojawiło się wtedy pismo. Zakończyła się pod koniec V w. n.e., wydarzeniem umownym jest rok 476, kiedy barbarzyńcy podbili Cesarstwo Rzymskie.'); break;
-              case 'Średniowiecze': $(info).text('Rozpoczęło się w drugiej połowie V w. n.e., (podbicie Cesarstwa Rzymskiego przez barbarzyńców). Epoka ta zakończyła się w 2 połowie XV w. (zdobycie Cesarstwa Bizantyjskiego przez Turków w 1453r.).'); break;
-              case 'Nowożytność': $(info).text('Nowożytność rozpoczęła się w 2 połowie XV w. Epoka ta kończy się w 1914r. (wybuch I wojny światowej).');break;
-              case 'Czasy współczesne': $(info).text('Czasy współczesne rozpoczęły się w 1918r. (zakończenie I wojny światowej) i trwa po dzień dzisiejszy.'); break;
-              default: $(info).text('Wskaż okres, którego dotyczy artykuł.');
-          }
-      }
-      catch(err){
-        showError('Era info error',err);
-      }
-  }
+}
 
   /////MENU EDYTORA
   //obsługa dodawania linku
@@ -176,7 +363,7 @@ $(document).ready(function(){
       if(sNode.nodeType==1){  //jest elementem drzewa dokumentu
         let nodeName = sNode.tagName.toLowerCase();
         let btn = document.getElementById('eClear');
-        console.log(nodeName+' '+sNode.id);
+        //console.log(nodeName+' '+sNode.id);
         
         switch(nodeName){
           case 'li':{ 

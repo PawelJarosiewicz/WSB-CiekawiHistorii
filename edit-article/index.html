@@ -52,7 +52,7 @@
           <a class="btn dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user text-info fa-lg mr-1"></i></a>
           <div class="dropdown-menu dropdown-menu-md-right myNavDropdown">
             <a class="dropdown-item text-light myMnuUserItem" href="/user">Twoje konto</a>
-            <a class="dropdown-item text-light myMnuUserItem" href="#" >Twoje artykuły</a>
+            <a class="dropdown-item text-light myMnuUserItem" href="/user/#navArticles" >Twoje artykuły</a>
             <a class="dropdown-item text-light myMnuUserItem" href="#" id="mnuLogOut"><i class="fas fa-sign-out-alt text-danger fa-lg mr-2"></i>Wyloguj</a>
           </div>
         </div>
@@ -87,10 +87,14 @@
         <div class="row">
           <div class="col-md-8">
             <h2 class="font-weight-bold py-4">Dodaj artykuł</h2>
-            <p class="text-justify border-bottom border-dark pb-2">W poniższym formularzu możesz wypełnić poszczególne elementy niezbędne do publikacji artykułu. Określ temat ciekawostki historycznej, słowa kluczowe (tagi) wg których inni będę mogli wyszukać twój artykuł, oraz opisz ciekawostkę historyczną.
+            <div id="anonymousUserInfo" hidden>
+              <p>Muisz się zalogować do serwisu aby móc dodawać artykuły. Jeśli nie masz konta, możesz je szybko utworzyć.</p>
+              <a href="/user/login" class="btn btn-outline-success mt-3">Zaloguj się lub utwórz konto <i class="fas fa-angle-double-right"></i></a>
+            </div>
+            <p class="text-justify border-bottom border-dark pb-2" id="loggedUserInfo" hidden>W poniższym formularzu możesz wypełnić poszczególne elementy niezbędne do publikacji artykułu. Określ temat ciekawostki historycznej, słowa kluczowe (tagi) wg których inni będę mogli wyszukać twój artykuł, oraz opisz ciekawostkę historyczną.
               Na końcu możesz zdecydować czy artykuł ma zostać opublikowany na naszej stronie czy też zapisany w wersji roboczej, niedostępny dla odwiedzających naszą stronę.
             </p>
-            <form class="py-2 needs-validation" novalidate>
+            <form class="py-2 needs-validation" onsubmit="return saveArticle(event)" novalidate hidden>
               <div class="form-group row">
                 <label for="artTitle" class="col-xl-2 col-lg-3  col-form-label pr-0 text-lg-right">Tytuł artykułu:</label>
                 <div class="col-xl-10 col-lg-9">
@@ -103,20 +107,21 @@
                 <div class="col-xl-10 col-lg-9">
                   <input type="text" class="form-control" id="artTags" required>
                   <small class="form-text text-muted">Wymień po przecinku hasła, wg których będzie można wyszukać Twój artykuł.</small>
-                  <div class="invalid-feedback">Określ przynajmniej 1 hasło</div>
+                  <div class="invalid-feedback">Określ przynajmniej 1 hasło.</div>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="artEra" class="col-xl-2 col-lg-3  col-form-label pr-0 text-lg-right">Epoka:</label>
                 <div class="col-xl-10 col-lg-9">
                   <select class="custom-select rounded" id="artEra" required>
-                    <option selected>Wskaż...</option>
+                    <option value="0" selected>Wskaż...</option>
                     <option>Starożytność</option>
                     <option>Średniowiecze</option>
                     <option>Nowożytność</option>
                     <option>Czasy współczesne</option>
                   </select>
                   <small class="form-text text-muted" id="eraInfo">Wskaż okres, którego dotyczy artykuł.</small>
+                  <div class="invalid-feedback">Określ epokę.</div>
                 </div>
                 
               </div>
@@ -164,13 +169,17 @@
                 </div>
                 
                 <div class="form-control mt-2 myEditor" id="editor" contenteditable> </div>
+                <div class="invalid-feedback">Treść artukułu nie może być pusta.</div>
               </div>
               <div class="form-row mt-2 px-3 justify-content-between align-middle">
-                <div class="form-group form-check px-2" id="artFrmCheck">
+                <div class="form-group form-check px-2">
                   <input type="checkbox" class="form-check-input" id="artPublic">
-                  <label class="form-check-label pointer" for="loginCheck" >Opublikuj artykuł</label>
+                  <label class="form-check-label pointer" for="loginCheck" id="artPublicLabel">Opublikuj artykuł</label>
                 </div>
                 <button type="submit" class="btn px-4 py-1 btn-outline-primary" id="artSave">Zapisz</button>
+              </div>
+              <div class="form-group">
+                <small class="form-text text-muted" id="artDateInfo"></small>
               </div>
             </form>
           </div>
