@@ -1,0 +1,17 @@
+.myEditor{
+    height: 50vh;
+    /* font-size: 0.95em; */
+    overflow-y: auto;
+}
+#artFrmCheck:hover{
+    border-radius: 5px;
+    box-shadow: 4px 6px 20px #999;
+    transform: translateY(-1px);
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+#artFrmCheck >label:hover{
+    cursor: pointer;
+}

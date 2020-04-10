@@ -81,24 +81,3 @@ function validateSendContact(e){
         } 
     }
 }
-
-function checkFieldEmpty(){
-    if($(this).val()==''){
-        $(this).addClass('is-invalid');
-      }
-    else{
-        $(this).removeClass('is-invalid');
-        $(this).addClass('is-valid');
-    }
-}
-function checkFieldEmptyById(controlId){
-    if(controlId){
-        if($(controlId).val()==''){
-            $(controlId).addClass('is-invalid');
-          }
-        else{
-            $(controlId).removeClass('is-invalid');
-            $(controlId).addClass('is-valid');
-        }
-    }
-}

@@ -38,7 +38,6 @@ $(document).ready(function(){
   if(!getCookie('cookieInfo')){
     showCookieInfo();
   }
-  showCookieInfo();
 
   //podpowiedzi - na końcu
   $('[data-toggle="tooltip"]').tooltip();
@@ -79,6 +78,7 @@ function setCookie(name, val, days, path, domain, secure) {
   }
 }
 
+//COOKIE--------
 function getCookie(name) {
   if (document.cookie !== "") {
       const cookies = document.cookie.split(/; */);
@@ -113,7 +113,9 @@ function showCookieInfo(){
     console.error('Show cookie info error: '+err);
   }
 }
+//--->
 
+//OKNA MODALNE-----------
 function logOut(){
   try{
     let modalTemplate = 
@@ -147,7 +149,7 @@ function showError(sHeader,sBody){
             '<div class="modal-content">' +
                 '<div class="modal-header text-danger ">' +
                     '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
-                    '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
+                    '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
                 '</div>' +
                 '<div class="modal-body myModal">' +sBody+'</div>' +
                 '<div class="modal-footer ">' +
@@ -173,7 +175,7 @@ function showInfo(sHeader,sBody,sFunction){
                                 '<div class="modal-content">' +
                                     '<div class="modal-header text-info">' +
                                         '<h6 class="modal-title myModal font-weight-bold">' +sHeader+'</h6>'+
-                                        '<button type="button" class="close myModal" data-dismiss="modal">&times;</button>' +
+                                        '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
                                     '</div>' +
                                     '<div class="modal-body myModal">' +sBody+'</div>' +
                                     '<div class="modal-footer ">' +
@@ -196,7 +198,7 @@ function showInfo(sHeader,sBody,sFunction){
   }
 }
 
-// Firebase
+// FIREBASE
 function firebaseLogInAnonymous(){
    return firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -218,6 +220,7 @@ function friebaseLogOut(){
     }
 }
 
+//FUNKCJE DO WALIDACJI FORMULARZY
 function validateEmail(email) 
 {
     let re = /\S+@\S+\.\S+/;
@@ -239,5 +242,26 @@ function checkEmail(){
   }
   catch(err){
     console.error('Check email error: '+err);
+  }
+}
+
+function checkFieldEmpty(){
+  if($(this).val()==''){
+      $(this).addClass('is-invalid');
+    }
+  else{
+      $(this).removeClass('is-invalid');
+      $(this).addClass('is-valid');
+  }
+}
+function checkFieldEmptyById(controlId){
+  if(controlId){
+      if($(controlId).val()==''){
+          $(controlId).addClass('is-invalid');
+        }
+      else{
+          $(controlId).removeClass('is-invalid');
+          $(controlId).addClass('is-valid');
+      }
   }
 }
