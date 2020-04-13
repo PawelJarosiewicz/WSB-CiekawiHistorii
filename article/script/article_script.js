@@ -23,20 +23,25 @@ $(document).ready(function(){
         let articleid = window.location.hash;
         if(articleid){
             articleid = articleid.substring(1); //odrzucamy pierwszy znak #
+            getArticleFromDB(articleid);
         }
-        getArticleFromDB(articleid);
    });
   });
 
   function getArticleFromDB(articleid){
-      db.collection("Articles").doc(articleid)
-      .get()
-      .then(function(doc){
-          insertArticle(doc);
-      })
-      .catch(function(error) {
-          showError('Błąd odczytywania artykułu o id='+articleid,error);
-      });
+      try{
+        db.collection("Articles").doc(articleid)
+        .get()
+        .then(function(doc){
+            insertArticle(doc);
+        })
+        .catch(function(error) {
+            showError('Błąd odczytywania artykułu o id='+articleid,error);
+        });
+    }
+    catch(err){
+        showError('Error',err);
+      }
   }
 
   //wstawiamy artykuł na stronę

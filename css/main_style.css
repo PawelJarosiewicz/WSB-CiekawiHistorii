@@ -56,7 +56,7 @@ body{
 }
 .myBtnSearch:hover{
     background-color: rgb(40, 40, 100);
-    transform: translateY(-1px);
+    /* transform: translateY(-1px); */
     color: rgb(0, 128, 0);
 }
 .myIconSearch:hover{
@@ -94,6 +94,7 @@ body{
     overflow-y: auto;
     border-radius: 10px;
     background-color: rgb(200,227,234);
+    box-shadow: 4px 6px 20px #999;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
@@ -104,6 +105,7 @@ body{
 }
 .mySidebarContent{
     margin-top: 7%;
+    
 }
 .myFooter{
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
@@ -118,10 +120,25 @@ body{
 }
 .lastArticle:hover{
     cursor: pointer;
+    padding: 0.5rem; 
+    border-radius: 10px; 
+    box-shadow: 4px 6px 20px #999;
+}
+.myArticle{
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.myArticleBody{
+    background-color: #f8f3f1;
+}
+.myArticle:hover{
+    cursor: pointer;
     padding: 0.5rem;
     border-radius: 10px;
-    box-shadow: 4px 6px 20px #999;
-    transform: translateY(-2px);
+    box-shadow: 4px 6px 20px #888;
+
 }
 #cookieInfo {
     font-family: Arial, Verdana, sans-serif;
@@ -155,7 +172,7 @@ body{
     }
     .myContainer{
         font-size: 1.1em;
-        padding-left: 7%;
+        padding-left: 5%;
     }
     .myNav{
         font-size: 1.2em;

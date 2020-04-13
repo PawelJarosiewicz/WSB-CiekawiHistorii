@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif&display=swap" rel="stylesheet">
 
-    <link rel="title icon" href="/img/favicon.ico" />
+	  <link rel="title icon" href="/img/favicon.ico" />
     <link rel="stylesheet" href="/css/main_style.css">
-    <link rel="stylesheet" href="../css/user_style.css">
 
     <title>Ciekawi Historii?</title>
   </head>
@@ -47,7 +46,7 @@
                 </div>
             </div>
         </form>
-        <a href="#" class="nav-link ml-2 myMnuUserItem" id="btnLogIn" hidden data-toggle="tooltip" data-html="true" title="<h6> Zaloguj się lub utwórz konto </h6>"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
+        <a href="/user/login" class="nav-link ml-2 myMnuUserItem" id="btnLogIn" hidden data-toggle="tooltip" data-html="true" title="<h6> Zaloguj się lub utwórz konto </h6>"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
         <div class="btn-group myMnuUserItem ml-2" id="btnMnuUser" hidden>
           <a class="btn dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user text-info fa-lg mr-1"></i></a>
           <div class="dropdown-menu dropdown-menu-md-right myNavDropdown">
@@ -63,84 +62,23 @@
 
     <!-- Zawartość strony -->
     <section class="mainSection">
-      <div class="container-fluid myContainer">
-        <div class="row justify-content-center mt-2">
-          <div class="col-lg-6 col-md-8 text-center">
-            <div class="m-4"><i class="fas fa-atlas fa-lg text-success mr-2"></i><span class="h5">Ciekawi Historii?</span></div>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn text-light myActiveBtn" id="btnLogin">Logowanie</button>
-                <button type="button" class="btn myInActiveBtn" id="btnNewUser">Utwórz konto</button>
-              </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
-            <!-- forma logowania -->
-            <form class="py-2 needs-validation" action=".." id="loginFrm" novalidate>
-              <div class="form-group">
-                <label for="loginEmail">E-mail</label>
-                <input type="email" id="loginEmail" class="form-control" required>
-                <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
-              </div>
-              <div class="form-group">
-                <label for="loginPass">Hasło</label>
-                <input type="password" class="form-control" id="loginPass" required>
-                <div class="invalid-feedback">Hasło musi mieć minimum 6 znaków.</div>
-              </div>
-              <div class="form-row">
-                <div class="form-group form-check">
-                  <input type="checkbox" class="form-check-input" id="loginCheck">
-                  <label class="form-check-label" for="loginCheck">Zapamiętaj mnie</label>
-                </div>
-                <a href="../reset-password" class="ml-auto">Nie pamiętam hasła</a>
-              </div>
-              <button type="submit" class="btn btn-block btn-outline-success">Zaloguj się</button>
-            </form>
-            <!-- forma nowego konta -->
-            <form class="py-2 needs-validation collapse" action=".." id="newUserFrm" novalidate>
-              <div class="form-group">
-                <label for="newUserName">Imię</label>
-                <input type="text" id="newUserName" class="form-control" required>
-                <div class="invalid-feedback">Podaj swoje imię, minimum 3 znaki.</div>
-              </div>
-              <div class="form-group">
-                <label for="newUserEmail">E-mail</label>
-                <input type="email" id="newUserEmail" class="form-control" required>
-                <div class="invalid-feedback">Proszę podać poprawny adres e-mail.</div>
-              </div>
-              <div class="form-group">
-                <label for="newUserPass">Hasło</label>
-                <input type="password" class="form-control" id="newUserPass" required>
-                <small  class="form-text text-muted">Twoje hasło musi mieć minimum 6 znaków.</small>
-                <div class="invalid-feedback">Proszę podać hasło.</div>
-              </div>
-              <div class="form-group">
-                <label for="newUserPass2">Powtórz hasło</label>
-                <input type="password" class="form-control" id="newUserPass2" required>
-                <div class="invalid-feedback">Proszę powtórz hasło.</div>
-              </div>
-              <button type="submit" class="btn btn-block btn-outline-success">Utwórz konto</button>
-            </form>
-          </div>
-        </div>
-      </div> 
-    </section>
-
-    <!-- okienko modalne -->
-    <div class="modal fade" id="modal-info">
-      <div class="modal-dialog">
-          <div class="modal-content myModal">
-              <div class="modal-header">
-                  <h4 class="modal-title myModal" id="m-title">Info</h4>
-                  <button type="button" class="close myModal" data-dismiss="modal">&times;</button>
-              </div>
-              <div class="modal-body" id="m-body">ewdsfsdfsfdsfsf</div>
-              <div class="modal-footer ">
-                  <button type="button" class="btn btn-primary myModal" data-dismiss="modal" id="m-OK">OK</button>
-              </div>
-          </div>
+      <!-- prawy kontener -->
+      <div class="mySidebarRight container-fluid">
+        <div class="mySidebarContent" id="lastArticles"></div>
       </div>
-  </div>
+
+      <!-- Treść artykułu -->
+      <div class="container-fluid myContainer">
+        <div class="row">
+          <div class="col-md-8 col-lg-9" id="artContainer">
+            <h1 class="font-weight-bold py-4">...</h1>
+            <p id="artCount">Liczba znalezionych artykułów: </p>
+            <div class="row row-cols-1 row-cols-md-1 row-cols-xl-3" id="cardArticles"> </div>
+          </div>
+        </div>
+    </div>
+
+  </section>
 
   <!-- footer -->
   <footer class="container-fluid bg-secondary py-3 myFooter">
@@ -172,6 +110,6 @@
 
     <!-- własne skrypty -->
     <script src="/scripts/main_script.js" type="text/javascript"></script>
-    <script src="../script/userLogin_script.js" type="text/javascript"></script>
+    <script src="script/articles_script.js" type="text/javascript"></script>
   </body>
 </html>
