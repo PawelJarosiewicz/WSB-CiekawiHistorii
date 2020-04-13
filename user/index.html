@@ -84,7 +84,7 @@
           <div class="tab-pane fade show active" id="tabProfile" role="tabpanel" aria-labelledby="tabProfile-tab">
             <div class="row justify-content-center">
               <div class="col-xl-8 col-lg-10 col-md-11">
-                <p class="mb-1 h6">Witaj <span id="userNameSpan">"imie_usera"</span>.</p>
+                <p class="mb-1 h5">Witaj <span id="userNameSpan">"imie_usera"</span>.</p>
                 <p class="text-justify border-bottom border-dark pb-2 h6">Poniżej znajdują się informacje na temat Twojego konta w naszym serwisie.</p>
                 <form class="py-2" novalidate>
                   <div class="form-group row">
@@ -117,7 +117,25 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade h5" id="tabArticles" role="tabpanel" aria-labelledby="tabArticles-tab">Artykuły</div>
+          <div class="tab-pane fade" id="tabArticles" role="tabpanel" aria-labelledby="tabArticles-tab">
+            <p class="mb-3 h5 border-bottom border-dark pb-2">Twoje artykuły</p>
+            <!-- karty z artykułami -->
+            <div class="row mb-1">
+              <label for="artEra" class="col-2 py-2 px-1 text-right">Epoka:</label>
+              <div class="col-lg-3 col-md-6 col-8">
+                <select class="custom-select rounded" id="artEra" required>
+                  <option value="0" selected>&lt;Wszystkie&gt;</option>
+                  <option>Starożytność</option>
+                  <option>Średniowiecze</option>
+                  <option>Nowożytność</option>
+                  <option>Czasy współczesne</option>
+                </select>
+              </div>
+            </div>
+            <p id="artCount">Liczba znalezionych artykułów: </p>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3" id="cardArticles">
+            </div>
+          </div>
           <!-- <div class="tab-pane fade h5 text-center" id="tabLogout" role="tabpanel" aria-labelledby="tabLogout-tab">Wylogowanie..</div> -->
         </div>
       </div>
@@ -239,6 +257,21 @@
             <div class="modal-footer ">
                 <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" onclick="deleteUser(event,document.getElementById('delUserMail'),document.getElementById('delUserPass'))">Zatwierdź</button>
                 <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal" onclick="changeModalClear(document.getElementById('delUserMail'),document.getElementById('delUserPass'))">Anuluj</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- okno modalne do obsługi karty artykułu -->
+  <div class="modal fade" id="modalDelArticle">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+              <p>Czy chcesz usunąć artykuł?</p>
+            </div>
+            <div class="modal-footer ">
+                <button type="button" class="btn btn-outline-danger myModal" data-dismiss="modal" id="delArtYes">Tak</button>
+                <button type="button" class="btn btn-outline-secondary myModal" data-dismiss="modal">Nie</button>
             </div>
         </div>
     </div>

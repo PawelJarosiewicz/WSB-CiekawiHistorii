@@ -45,6 +45,7 @@ $(document).ready(function(){
   }
 });
 
+//METODY
 function validateResetPass(e){
   try{
     if($('#resetPassEmail').val()=='' | !validateEmail($('#resetPassEmail').val())){

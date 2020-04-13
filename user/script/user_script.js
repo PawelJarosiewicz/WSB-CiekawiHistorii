@@ -42,6 +42,12 @@ $(document).ready(function(){
             $('#profileUserName').val(currUser.displayName);
             $('#profileUserEmail').val(currUser.email);
             $('#profileUserPass').val('######'); 
+
+            //przekierowanie do konkretnej zakładki
+            let tab = window.location.hash;
+            if(tab){
+              $(tab).click();
+            }
           }
                   
       } else {
@@ -49,14 +55,125 @@ $(document).ready(function(){
           document.location.href='/user/login';
       }
     });
-  
-  //przekierowanie do konkretnej zakładki
-  let tab = window.location.hash;
-  if(tab){
-    $(tab).click();
-  }
+  //odczytanie artykułów usera
+  $('#navArticles').click(function (){
+    $('#cardArticles').empty(); //kasujemy wszystkie subelementy kontenera do karty artykułów.
+    getUserArticles();  //pobieramy artykuły
+  }); 
+  $('#artEra').change(function(){
+    $('#cardArticles').empty(); 
+    getUserArticles(); 
+  });
+
+  //ukrycie tooltipa po kliknięciu
+  $('[data-toggle="pill"]').each(function(){
+    $(this).bind('click',function(){ $(this).tooltip('hide'); });
+  });
 });
 
+//METODY do obsługi strony
+//ARTYKUŁY-----------
+function getUserArticles(){
+  try{ 
+    if(currUser){
+      if(!currUser.isAnonymous){
+        let c=0;
+        let articles = db.collection("Articles"); //odnośnik do listy artykułów
+        let artFiltr= articles.where("UserId","==",currUser.uid);  //filtr po id usera
+        if($('#artEra').val()!=0){
+          artFiltr = artFiltr.where("Era","==",$('#artEra').val());
+        }
+        artFiltr.get()  //pobieramy
+        .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc){  //pętla po wynikach
+            createUserCardArticle(doc);
+            c++;
+          });
+          $('#artCount').html("Liczba artykułów: <b>"+c+"</b>");
+        })
+        .catch(function(error){
+          showError('Błąd pobierania listy artykułów.',error);
+        });
+      }
+    }
+  }
+  catch(err){
+    showError('Error (get user articles): ',err);
+  }
+}
+
+function createUserCardArticle(article){
+  try{
+    //article -> obiekt otrzymany z bazy firebase
+    //article.id -> id obiektu (dokumentu) zapisanego w bazie
+    //article.data() -> treść właściwego artykułu (dokumentu)
+    let articleText = article.data().ArticleText;    
+    if(articleText.length>500){ //skracamy tekst do 500 znaków
+      articleText = articleText.substring(0,500)+'...';
+    }
+    let title = article.data().Title;
+    let footer = 'Ostatnia modyfikacja '+article.data().ModifyDate;
+    if(article.data().Public){
+      footer=footer+', Opublikowano: '+article.data().PublicDate;
+    }
+    let articleTemplate= document.createElement('div');
+    articleTemplate.setAttribute('class', 'col mb-4');
+
+    let cardTemplate = document.createElement('div');
+    cardTemplate.setAttribute('class', 'card h-100 border-info');
+
+    let cardBodyTemplate = document.createElement('div');
+    cardBodyTemplate.setAttribute('class','card-body');
+    cardBodyTemplate.innerHTML = '<h5 class="card-title">'+title+'</h5> <p class="card-text">'+articleText+'</p>';
+
+    let cardFooterTemplate = document.createElement('div');
+    cardFooterTemplate.setAttribute('class','card-footer bg-muted border-info');
+    cardFooterTemplate.innerHTML=`<div class="row justify-content-between"> <small class="col-6 text-muted">${footer}</small>
+        <div class="mr-2">
+          <button class="btn btn-outline-primary py-0" onclick="editArticle('${article.id}')">Edytuj</button>
+          <button class="btn btn-outline-danger py-0" onclick="deleteArticle('${article.id}','${title}')">Usuń</button>
+        </div>
+      </div>`;
+
+    //dodajemy do struktury strony
+    cardTemplate.appendChild(cardBodyTemplate);
+    cardTemplate.appendChild(cardFooterTemplate);
+    articleTemplate.appendChild(cardTemplate);
+    document.getElementById('cardArticles').appendChild(articleTemplate);
+  }
+  catch(err){
+    showError('Error (create card article): ',err);
+  }
+}
+
+function deleteArticle(articleId, title){
+  try{
+    $('#modalDelArticle p').html('Czy chcesz usunąć artykuł "'+title+'"?');
+    $('#delArtYes').click(function(){
+      db.collection("Articles").doc(articleId).delete().then(function() {
+        $('#cardArticles').empty();
+        getUserArticles();
+        }).catch(function(error) {
+          showError("Błąd podczas usuwania artykułu", error);
+        });
+    });
+    $('#modalDelArticle').modal();
+  }
+  catch(err){
+    showError('Error (delete article): ',err);
+  }
+}
+
+function editArticle(articleId){
+  try{
+    document.location.href="/edit-article/#"+articleId;
+  }
+  catch(err){
+    showError('Error (edit article): ',err);
+  }
+}
+
+//PODPOWIEDZI-----------
 function showPillToolTips(){
   try{
     if($(window).width()<=768){
@@ -78,6 +195,7 @@ function showPillToolTips(){
   }
 }
 
+//PROFIL-----------
 function changeUserName(newName){
   if(newName){
     try{
@@ -223,7 +341,7 @@ function changeUserPass(e,idNewPass,idNewPass2,idMail,idOldPass){
 
 function deleteUser(e,idMail,idPass){
   try{
-    //wolidacja podczas wpisywania
+    //walidacja podczas wpisywania
     $(idMail).on('input',checkEmail); 
     $(idPass).on('input',checkPass);
 

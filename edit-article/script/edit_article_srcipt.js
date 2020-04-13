@@ -1,4 +1,5 @@
 var caretPos;
+var currArticle; //zapisany dokument w bazie
 
 $(document).ready(function(){ 
     //sprawdzenie czy user jest zalogowany i wypełniamy formularz
@@ -11,8 +12,11 @@ $(document).ready(function(){
             else{
               $('#loggedUserInfo').removeAttr('hidden');
               $('form').removeAttr('hidden');
-            }
-                    
+              let articleid = window.location.hash;
+              if(articleid){
+                loadFrmArticle(articleid.substring(1)); //odrzucamy pierwszy znak #
+              }
+            }    
         } else {
             currUser=null;
             $('#anonymousUserInfo').removeAttr('hidden');
@@ -112,9 +116,9 @@ $(document).ready(function(){
         //zapis do bazy
         let pubDate='';
         if(public.checked){
-          if(docArticle){ //artykuł był publikowany -> nie zmieniamy daty
-            if(docArticle.PublicDate){
-              pubDate = docArticle.PublicDate;
+          if(currArticle){ //artykuł był publikowany -> nie zmieniamy daty
+            if(currArticle.PublicDate){
+              pubDate = currArticle.PublicDate;
             }
             else{
               pubDate = (new Date()).toISOString();
@@ -142,8 +146,8 @@ $(document).ready(function(){
         const fetchPromises = []; 
         fetchPromises.push(saveArticleToDB(article));
         Promise.all(fetchPromises).then(()=>{
-          if(docArticle){
-            showInfo('Artykuł zapisany','Artykuł został zapisany z identyfikatorem: '+docArticle.id);
+          if(currArticle){
+            showInfo('Artykuł zapisany','Artykuł został zapisany z identyfikatorem: '+currArticle.id);
           }
         });
         if(public.checked){
@@ -179,14 +183,24 @@ $(document).ready(function(){
     }
   }
 
-  function loadFrmArticle(article){
+  function loadFrmArticle(articleid){
     try{
-      $('#artTitle').val(article.Title);
-      $('#artTags').val(article.Tags);
-      $('#artEra').val(article.Era);
-      $('#editor').html(article.ArticleText);
-      document.getElementById('artPublic').checked = article.Public;
-      changeSubmitBtnInfo();
+      db.collection("Articles").doc(articleid)
+      .get()
+      .then(function(doc){
+        currArticle = doc;  //bieżący artykuł
+        let article = doc.data();
+        $('#artTitle').val(article.Title);
+        $('#artTags').val(article.Tags);
+        $('#artEra').val(article.Era);
+        $('#editor').html(article.ArticleText);
+        document.getElementById('artPublic').checked = article.Public;
+        changeSubmitBtnInfo();
+      })
+      .catch(function(error) {
+        showError('Błąd wczytywania artykułu o id='+articleid,error);
+      });
+      
     }
     catch(err){
       showError('Error',err);
@@ -194,22 +208,22 @@ $(document).ready(function(){
   }
 
   function saveArticleToDB(article){
-    if(docArticle){ //artukuł istnieje -> update
-      let doc = db.collection("Articles").doc(docArticle.id);
+    if(currArticle){ //artukuł istnieje -> update
+      let doc = db.collection("Articles").doc(currArticle.id);
       return doc.update(article)
           .catch(function(error) {
-            docArticle=null;
+            currArticle=null;
             showError('Error (modify article in db): ',error);
           });
     }
     else{ //dodajemy nowy
       return db.collection("Articles").add(article)
           .then(function(docRef) { 
-            docArticle = docRef; 
-            setDocObserver(docArticle.id);
+            currArticle = docRef; 
+            setDocObserver(currArticle.id);
           })
           .catch(function(error) {
-            docArticle=null;
+            currArticle=null;
             showError('Error (add article to db): ',error);
           });
     }
@@ -219,17 +233,17 @@ function setDocObserver(docId){
   try{
     db.collection("Articles").doc(docId)
     .onSnapshot(function(doc) { 
-      docArticle = doc;
+      currArticle = doc;
       //daty modyfikacji artykułu
-      if(docArticle.data().PublicDate){
-        $('#artDateInfo').html('Data publikacji: '+docArticle.data().PublicDate);
+      if(currArticle.data().PublicDate){
+        $('#artDateInfo').html('Data publikacji: '+currArticle.data().PublicDate);
       }
       let dateInfo = $('#artDateInfo').html();
       if(dateInfo){
-        dateInfo=dateInfo+', data modyfikacji: '+docArticle.data().ModifyDate;
+        dateInfo=dateInfo+', data modyfikacji: '+currArticle.data().ModifyDate;
       }
       else{
-        dateInfo='Data modyfikacji: '+docArticle.data().ModifyDate;
+        dateInfo='Data modyfikacji: '+currArticle.data().ModifyDate;
       }
       $('#artDateInfo').html(dateInfo);
     });

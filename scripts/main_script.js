@@ -1,5 +1,4 @@
 var currUser;   //zmienna globalna do przechowywania info o zalogowanym użytkowniku
-var docArticle; //zapisany dokument w bazie
 
 $(document).ready(function(){
   //zmiana ikony dla przycisku przełączającego menu
@@ -18,6 +17,28 @@ $(document).ready(function(){
           else{
             $('#btnMnuUser').removeClass('collapse'); //pokazujemy menu usera
             $('#btnLogIn').addClass('collapse'); //ukrywamy przycisk logowania
+          }
+          //odczytanie listy ostatnich artykułów 
+          let contLastArt = document.getElementById('lastArticles');
+          if(contLastArt){
+            try{
+              $(contLastArt).empty();
+              $(contLastArt).html('<h5 class="font-weight-bolder pb-3">Ostatnie artykuły</h5>');
+              db.collection("Articles").where("PublicDate",">","").orderBy("PublicDate","desc").limit(3)
+              .get()
+              .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc){  //pętla po wynikach
+                  contLastArt.appendChild(createContainerArticle(doc));
+                });
+
+              })
+              .catch(function(error){
+                console.error('Błąd pobierania listy artykułów.',error);
+              });
+            }
+            catch(err){
+              console.error('Load last articles',err);
+            }
           }         
       } else {
           currUser=null;
@@ -43,7 +64,35 @@ $(document).ready(function(){
   //podpowiedzi - na końcu
   $('[data-toggle="tooltip"]').tooltip();
 });
+//END READY
 
+//METODY wspólne dla całej witryny
+
+//OSTATNIE ARTYKUŁY-----------
+function createContainerArticle(article){
+    //article -> obiekt otrzymany z bazy firebase
+    //article.id -> id obiektu (dokumentu) zapisanego w bazie
+    //article.data() -> treść właściwego artykułu (dokumentu)
+    let articleText = article.data().ArticleText;    
+    if(articleText.length>100){ //skracamy tekst do 100 znaków
+      articleText = articleText.substring(0,100)+'...';
+    }
+    //zamiana nagłówków na paragrafy - h1..h6 psują wygląd tekstu bocznego panelu
+    articleText = articleText.replace(/<h1>/gi, '<p>').replace(/<\h1>/gi, '</p>');
+    articleText = articleText.replace(/<h2>/gi, '<p>').replace(/<\h2>/gi, '</p>');
+    articleText = articleText.replace(/<h3>/gi, '<p>').replace(/<\h3>/gi, '</p>');
+    articleText = articleText.replace(/<h4>/gi, '<p>').replace(/<\h4>/gi, '</p>');
+    articleText = articleText.replace(/<h5>/gi, '<p>').replace(/<\h5>/gi, '</p>');
+    articleText = articleText.replace(/<h6>/gi, '<p>').replace(/<\h6>/gi, '</p>');
+    let title = article.data().Title;
+
+    let articleTemplate= document.createElement('div');
+    articleTemplate.setAttribute('class','border-bottom border-dark m-3');
+    articleTemplate.innerHTML=`<h6 class="font-weight-bolder">${title}</h6><div>${articleText}</div>`;
+    return articleTemplate;
+}
+
+//MENU - zmiana ikony przycisku menu
 function changeNavToggleIcon(){
   if($('#nav').hasClass('show')){    
     $('.fa-times').addClass('collapse');
@@ -55,6 +104,7 @@ function changeNavToggleIcon(){
   }
 }
 
+//COOKIE--------
 function setCookie(name, val, days, path, domain, secure) {
   if (navigator.cookieEnabled) { //czy ciasteczka są włączone
       const cookieName = encodeURIComponent(name);
@@ -79,7 +129,6 @@ function setCookie(name, val, days, path, domain, secure) {
   }
 }
 
-//COOKIE--------
 function getCookie(name) {
   if (document.cookie !== "") {
       const cookies = document.cookie.split(/; */);
