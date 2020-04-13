@@ -11,40 +11,20 @@ $(document).ready(function(){
           currUser = user;
           console.log('Logged user id='+currUser.uid); 
           if(currUser.isAnonymous){
-            $('#btnMnuUser').addClass('collapse');
-            $('#btnLogIn').removeClass('collapse');
+            $('#btnLogIn').removeAttr('hidden');
           } 
           else{
-            $('#btnMnuUser').removeClass('collapse'); //pokazujemy menu usera
-            $('#btnLogIn').addClass('collapse'); //ukrywamy przycisk logowania
+            $('#btnMnuUser').removeAttr('hidden');//pokazujemy menu usera
           }
           //odczytanie listy ostatnich artykułów 
-          let contLastArt = document.getElementById('lastArticles');
-          if(contLastArt){
-            try{
-              $(contLastArt).empty();
-              $(contLastArt).html('<h5 class="font-weight-bolder pb-3">Ostatnie artykuły</h5>');
-              db.collection("Articles").where("PublicDate",">","").orderBy("PublicDate","desc").limit(3)
-              .get()
-              .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc){  //pętla po wynikach
-                  contLastArt.appendChild(createContainerArticle(doc));
-                });
-
-              })
-              .catch(function(error){
-                console.error('Błąd pobierania listy artykułów.',error);
-              });
-            }
-            catch(err){
-              console.error('Load last articles',err);
-            }
-          }         
+          loadLastArticles();     
       } else {
           currUser=null;
-          $('#btnMnuUser').addClass('collapse');
-          $('#btnLogIn').removeClass('collapse'); 
-          console.log('User not logged');
+          $('#btnLogIn').removeAttr('hidden');
+          const fetchPromises = [];
+            fetchPromises.push(firebaseLogInAnonymous());   //logowanie anonimowe
+            Promise.all(fetchPromises)
+            .then(()=>{ loadLastArticles(); });  
       }
     });
   //czas trwania sesji
@@ -69,13 +49,36 @@ $(document).ready(function(){
 //METODY wspólne dla całej witryny
 
 //OSTATNIE ARTYKUŁY-----------
+function loadLastArticles(){
+  let contLastArt = document.getElementById('lastArticles');
+          if(contLastArt){
+            try{
+              $(contLastArt).empty();
+              $(contLastArt).html('<h5 class="font-weight-bolder pb-3">Ostatnie artykuły</h5>');
+              db.collection("Articles").where("PublicDate",">","").orderBy("PublicDate","desc").limit(3)
+              .get()
+              .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc){  //pętla po wynikach
+                  contLastArt.appendChild(createContainerArticle(doc));
+                });
+
+              })
+              .catch(function(error){
+                console.error('Błąd pobierania listy artykułów.',error);
+              });
+            }
+            catch(err){
+              console.error('Load last articles',err);
+            }
+          } 
+}
 function createContainerArticle(article){
     //article -> obiekt otrzymany z bazy firebase
     //article.id -> id obiektu (dokumentu) zapisanego w bazie
     //article.data() -> treść właściwego artykułu (dokumentu)
     let articleText = article.data().ArticleText;    
-    if(articleText.length>100){ //skracamy tekst do 100 znaków
-      articleText = articleText.substring(0,100)+'...';
+    if(articleText.length>200){ //skracamy tekst
+      articleText = articleText.substring(0,200)+' ...';
     }
     //zamiana nagłówków na paragrafy - h1..h6 psują wygląd tekstu bocznego panelu
     articleText = articleText.replace(/<h1>/gi, '<p>').replace(/<\h1>/gi, '</p>');
@@ -87,8 +90,12 @@ function createContainerArticle(article){
     let title = article.data().Title;
 
     let articleTemplate= document.createElement('div');
-    articleTemplate.setAttribute('class','border-bottom border-dark m-3');
+    articleTemplate.setAttribute('class','border-bottom border-dark my-3 lastArticle');
+    // articleTemplate.setAttribute('id',article.id);
     articleTemplate.innerHTML=`<h6 class="font-weight-bolder">${title}</h6><div>${articleText}</div>`;
+    $(articleTemplate).click(function(){
+      document.location.href="/article/#"+article.id;
+    });
     return articleTemplate;
 }
 

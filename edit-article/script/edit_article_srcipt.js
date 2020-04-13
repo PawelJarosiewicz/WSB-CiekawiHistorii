@@ -66,6 +66,8 @@ $(document).ready(function(){
       $('#editor').bind('input',clearFieldInvalidState);
   });
 
+  //METODY-----------
+  //OBSŁUGA ARTYKUŁU
   function saveArticle(e){
     let btn = document.getElementById('artSave');
     let public = document.getElementById('artPublic');
@@ -253,6 +255,7 @@ function setDocObserver(docId){
   }
 }
 
+//FORMULARZ-----------
 function changeSubmitBtnInfo(){
   try{
     let btn = document.getElementById('artSave');
@@ -291,7 +294,7 @@ function showSelectedEraInfo(){
     }
 }
 
-  /////MENU EDYTORA
+  //MENU EDYTORA-----------
   //obsługa dodawania linku
   function editorInsertLink(){
     try{
