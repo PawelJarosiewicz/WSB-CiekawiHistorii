@@ -124,22 +124,6 @@ body{
     border-radius: 10px; 
     box-shadow: 4px 6px 20px #999;
 }
-.myArticle{
-    -webkit-transition: all 0.5s;
-    -moz-transition: all 0.5s;
-    -o-transition: all 0.5s;
-    transition: all 0.5s;
-}
-.myArticleBody{
-    background-color: #f8f3f1;
-}
-.myArticle:hover{
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 10px;
-    box-shadow: 4px 6px 20px #888;
-
-}
 #cookieInfo {
     font-family: Arial, Verdana, sans-serif;
     position: fixed;

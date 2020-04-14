@@ -13,6 +13,7 @@
 
 	  <link rel="title icon" href="/img/favicon.ico" />
     <link rel="stylesheet" href="/css/main_style.css">
+    <link rel="stylesheet" href="css/article_style.css">
 
     <title>Ciekawi Historii?</title>
   </head>
@@ -67,13 +68,43 @@
         <div class="mySidebarContent" id="lastArticles"></div>
       </div>
 
-      <!-- Treść artykułu -->
+      <!-- Treść główna strony -->
       <div class="container-fluid myContainer">
         <div class="row">
           <div class="col-md-8 col-lg-9" id="artContainer">
             <h1 class="font-weight-bold py-4">...</h1>
-            <p id="artCount">Liczba znalezionych artykułów: </p>
+            <p id="artCount">Łączna liczba znalezionych artykułów: <b id="artTotalC"></b>, na stronie: <b id="artPageC"></b></p>
             <div class="row row-cols-1 row-cols-md-1 row-cols-xl-3" id="cardArticles"> </div>
+            <!-- nawigacja stron -->
+            <nav id="pageNav">
+              <ul class="pagination justify-content-center">
+                  <li class="page-item disabled">
+                      <button class="page-link py-2 px-3" id="pageP">
+                          <span>&laquo;</span>
+                      </button>
+                  </li>
+                  <li class="page-item active">
+                      <button class="page-link py-2 px-3">
+                          <span>1</span>
+                      </button>
+                  </li>
+                  <li class="page-item">
+                      <button class="page-link py-2 px-3">
+                          <span>2</span>
+                      </button>
+                  </li>
+                  <li class="page-item">
+                      <button  class="page-link py-2 px-3">
+                          <span>3</span>
+                      </button>
+                  </li>
+                  <li class="page-item" id="#pageNli">
+                      <button  class="page-link py-2 px-3" id="pageN">
+                          <span>&raquo;</span>
+                      </button>
+                  </li>
+              </ul>
+          </nav>
           </div>
         </div>
     </div>

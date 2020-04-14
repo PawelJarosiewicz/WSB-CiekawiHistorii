@@ -64,6 +64,16 @@ $(document).ready(function(){
       $('#artTags').bind('input',clearFieldInvalidState);
       $('#artEra').bind('input',clearFieldInvalidState);
       $('#editor').bind('input',clearFieldInvalidState);
+
+      $('#clearFrm').click(function(){
+        $('#artTitle').val('');
+        $('#artTags').val('');
+        $('#artEra').val(0);
+        $('#editor').html('');
+        document.getElementById('artPublic').checked=false;
+        $('#artDateInfo').html('');
+        currArticle=null;
+      });
   });
 
   //METODY-----------
@@ -135,13 +145,18 @@ $(document).ready(function(){
         }
         let article={
           Title: title.value,
+          Title_lc: title.value.toLowerCase(),
           Tags: tags.value,
+          Tags_lc: tags.value.split(','),
           Era: era.value,
+          Era_lc: era.value.toLowerCase(),
           ArticleText: artText.innerHTML,
+          ArticleText_lc: $(artText).text().toLowerCase(),
           Public: public.checked,
           UserId: currUser.uid,
           UserMail: currUser.email,
           UserName: currUser.displayName,
+          UserName_lc: currUser.displayName.toLowerCase(),
           PublicDate: pubDate,
           ModifyDate: (new Date()).toISOString()
         }

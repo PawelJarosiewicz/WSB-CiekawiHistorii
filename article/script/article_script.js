@@ -30,14 +30,16 @@ $(document).ready(function(){
 
   function getArticleFromDB(articleid){
       try{
-        db.collection("Articles").doc(articleid)
-        .get()
-        .then(function(doc){
-            insertArticle(doc);
-        })
-        .catch(function(error) {
-            showError('Błąd odczytywania artykułu o id='+articleid,error);
-        });
+          if(articleid){
+            db.collection("Articles").doc(articleid)
+            .get()
+            .then(function(doc){
+                insertArticle(doc);
+            })
+            .catch(function(error) {
+                showError('Błąd odczytywania artykułu o id='+articleid,error);
+            });
+          }
     }
     catch(err){
         showError('Error',err);
@@ -54,6 +56,7 @@ $(document).ready(function(){
       let pubDate = article.data().PublicDate;
       let modDate = article.data().ModifyDate;
       let autor = article.data().UserName;
+      let tags = article.data().Tags;
 
       //składowe artykułu
       let headTemplate = document.createElement('h1');
@@ -67,6 +70,7 @@ $(document).ready(function(){
       fTemplate.setAttribute('class','border-top border-dark my-4 pt-1 text-secondary');
       fTemplate.innerHTML=`
         <p class="font-italic">Epoka: ${era}</p>
+        <p class="font-italic">Tagi: ${tags}</p>
         <p class="font-italic m-0">Autor: ${autor}</p>
         <p class="font-italic m-0">Data publikacji: ${pubDate}</p>
         <p class="font-italic m-0">Data ostatniej modyfikacji: ${modDate}</p>
