@@ -15,3 +15,63 @@
     box-shadow: 4px 6px 20px #888;
 
 }
+.mySpinner{
+  position: relative;
+  text-align: center;
+  z-index: 9999;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 5px solid rgba(0, 123, 255);
+  border-radius: 50%;
+  -webkit-animation: rotation 1s infinite linear;
+  -moz-animation: rotation 1s infinite linear;
+  -o-animation: rotation 1s infinite linear;
+  animation: rotation 1s infinite linear;
+}
+
+.mySpinnerTop {
+  border-top-color: rgba(0, 123, 255, .3);
+  }
+.mySpinnerRight {
+  border-right-color: rgba(0, 123, 255, .3);
+}
+.mySpinnerLeft {
+  border-left-color: rgba(0, 123, 255, .3);
+}
+.mySpinnerBottom {
+  border-bottom-color: rgba(0, 123, 255, .3);
+}
+
+@-webkit-keyframes rotation {
+  from {
+      -webkit-transform: rotate(0deg);
+  }
+  to {
+      -webkit-transform: rotate(359deg);
+  }
+}
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-o-keyframes rotation{
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+      transform: rotate(0deg);
+  }
+  to {
+      transform: rotate(359deg);
+  }
+}

@@ -44,17 +44,17 @@ body{
     padding-left: 0;
     text-align: left;
 }
-.inputSearch:focus{
+#inputSearch:focus{
     box-shadow: none;
 }
-.myBtnSearch{
+#myBtnSearch{
     background-color: rgb(204, 204, 204);
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
 }
-.myBtnSearch:hover{
+#myBtnSearch:hover{
     background-color: rgb(40, 40, 100);
     /* transform: translateY(-1px); */
     color: rgb(0, 128, 0);
@@ -169,13 +169,13 @@ body{
     }
 }
 @media only screen and (max-width:850px){
-    .inputSearch{
+    #inputSearch{
         max-width: 200px;
     }
 }
 /* Laptop -> tablet */
 @media only screen and (max-width:800px){
-    .inputSearch{
+    #inputSearch{
         max-width: 150px;
     }
 }

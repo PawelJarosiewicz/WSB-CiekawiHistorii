@@ -38,14 +38,14 @@
           <li class="nav-item myNavItem"><a class="nav-link text-light px-3" href="contact">Kontakt</a></li>
         </ul>
         <span class="d-md-flex">
-          <form class="form-inline">
+          <form class="form-inline" action="/articles/" method="GET">
             <div class="input-group">
-                <input class="form-control inputSearch" type="text" placeholder="szukaj...">
+                <input class="form-control" id="inputSearch" type="text" placeholder="szukaj..." name="search">
                 <div class="input-group-append">
-                    <button type="button" class="btn text-muted myBtnSearch" ><i class="fas fa-search myIconSearch"></i></button>
+                    <button type="submit" class="btn text-muted" id="myBtnSearch" ><i class="fas fa-search myIconSearch"></i></button>
                 </div>
             </div>
-        </form>
+          </form>
         <a href="user/login" class="nav-link ml-2 myMnuUserItem" id="btnLogIn" hidden data-toggle="tooltip" data-html="true" title="<h6> Zaloguj się lub utwórz konto </h6>"><i class="fas fa-sign-in-alt text-success fa-lg"></i></a>
         <div class="btn-group myMnuUserItem ml-2" id="btnMnuUser" hidden>
           <a class="btn dropdown-toggle text-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user text-info fa-lg mr-1"></i></a>

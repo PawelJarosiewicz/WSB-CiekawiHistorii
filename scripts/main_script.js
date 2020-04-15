@@ -40,6 +40,14 @@ $(document).ready(function(){
   if(!getCookie('cookieInfo')){
     showCookieInfo();
   }
+  //szukanie z głównego menu
+  // $('#myBtnSearch').click(startSearch);
+  // $('#inputSearch').keypress(function(event){
+  //   if(event.keyCode==13){
+  //     // event.preventDefault();
+  //     startSearch();
+  //   }
+  // });
 
   //podpowiedzi - na końcu
   $('[data-toggle="tooltip"]').tooltip();
@@ -47,6 +55,22 @@ $(document).ready(function(){
 //END READY
 
 //METODY wspólne dla całej witryny
+
+//WYSZUKIWANIE
+function startSearch(){
+  try{
+    let searchStr = $('#inputSearch').val();
+    if(searchStr.length!=0){
+      alert('/articles/?'+encodeURIComponent(searchStr))
+      // document.location.href = "/articles/?"+encodeURIComponent(searchStr);
+      window.location.href = '/articles/?'+encodeURIComponent(searchStr);
+
+    }
+  }
+  catch(err){
+    showError('Error (start search) '+err);
+  }
+}
 
 //OSTATNIE ARTYKUŁY-----------
 function loadLastArticles(){

@@ -1,15 +1,25 @@
 var listDocsId=[]; //tablica artykułów do nawigowania
-var docQuery;
+var docQuery='';
 var limitDoc=9; //liczba artykułów na stronie
 var currPageNo=1; //numer aktualnej strony z artykułami
-var era;
+var era='';
+var searchStr='';
 $(document).ready(function(){ 
     //sprawdzenie czy user jest zalogowany i wypełniamy formularz
     firebase.auth().onAuthStateChanged(function(user) {
         era = window.location.hash;
+        let searchUrl = window.location.search;
         if(era){
             era = era.substring(1); //odrzucamy pierwszy znak #
         }
+        else if(searchUrl){
+          let s = searchUrl.split('='); //dzielimy przekazany tekst, który ma postać => ?search=jakiś+tam+tekst
+          if(s.length==2){
+            searchStr = decodeURIComponent(s[1].replace(/\+/g, '%20'));  //konwertujemy na tekst to wyszukiwania
+          }
+          alert(searchStr)
+        }
+
         if (user) {
             currUser = user;   
             getArticlesFromDB(era);
@@ -65,6 +75,7 @@ $(document).ready(function(){
       });
     }
   });
+
 
   });
 
@@ -135,6 +146,8 @@ $(document).ready(function(){
           }
           $('#artContainer h1').text(eraTxt);
           listDocsId.length=0;  //kasujemy tablicę
+          $('#gSpinners').removeClass('d-none');  //pokazujemy animację
+          $('#gSpinners').addClass('d-flex');
           let articles = db.collection("Articles"); //odnośnik do listy artykułów
           docQuery = articles.where("Public","==",true).where("Era","==",eraTxt).orderBy("PublicDate","desc");  //bazowy filtr 
   
@@ -159,6 +172,8 @@ $(document).ready(function(){
 
   function getArticlesOnPage(query,pageNo){
     try{
+      $('#gSpinners').removeClass('d-none');  //pokazujemy animację
+      $('#gSpinners').addClass('d-flex');
       let startDoc;
       let docid;
       $('#cardArticles').empty(); //czyścimy listę artykułów na stronie
@@ -189,6 +204,8 @@ $(document).ready(function(){
               showError('Błąd pobierania listy artykułów.',error);
             });
           }
+        $('#gSpinners').removeClass('d-flex');  //pokazujemy animację
+        $('#gSpinners').addClass('d-none');
         });
       }
     }

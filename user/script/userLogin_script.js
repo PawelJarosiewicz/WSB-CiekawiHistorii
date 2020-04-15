@@ -156,21 +156,19 @@ function validateLogIn(e){
       $(btn).addClass('btn-success');
       const fetchPromises = [];
       let lu=firebase.auth().signInWithEmailAndPassword($('#loginEmail').val(), $('#loginPass').val())
-      .catch(function(error) {
-        decodeLogInError(error);
-        $(btn).html('Zaloguj się');
-        $(btn).addClass('btn-outline-success');
-        $(btn).removeClass('btn-success');
-      });
-
-      fetchPromises.push(lu);
-      Promise.all(fetchPromises).then(()=>{
+      .then(()=>{
         if(currUser){
           if($('#loginCheck').is(':checked') ){  //zapamiętujemy login jeśli zaznaczono
             setCookie('userMail',$('#loginEmail').val(),365,'/');
           }
           window.location.href = '/user';
         }
+      })
+      .catch(function(error) {
+        decodeLogInError(error);
+        $(btn).html('Zaloguj się');
+        $(btn).addClass('btn-outline-success');
+        $(btn).removeClass('btn-success');
       });
     }
   }

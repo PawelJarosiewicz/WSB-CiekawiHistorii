@@ -12,6 +12,7 @@ $(document).ready(function(){
             else{
               $('#loggedUserInfo').removeAttr('hidden');
               $('form').removeAttr('hidden');
+              $('#clearFrm').removeAttr('hidden');
               let articleid = window.location.hash;
               if(articleid){
                 loadFrmArticle(articleid.substring(1)); //odrzucamy pierwszy znak #
