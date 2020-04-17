@@ -114,8 +114,9 @@ function createUserCardArticle(article){
     let title = article.data().Title;
     let footer = 'Ostatnia modyfikacja '+article.data().ModifyDate;
     if(article.data().Public){
-      footer=footer+', Opublikowano: '+article.data().PublicDate;
+      footer=footer+'</br> Opublikowano: '+article.data().PublicDate;
     }
+    let tags = "Tagi: "+article.data().Tags;
     let articleTemplate= document.createElement('div');
     articleTemplate.setAttribute('class', 'col mb-4');
 
@@ -128,12 +129,13 @@ function createUserCardArticle(article){
 
     let cardFooterTemplate = document.createElement('div');
     cardFooterTemplate.setAttribute('class','card-footer bg-muted border-info');
-    cardFooterTemplate.innerHTML=`<div class="row justify-content-between"> <small class="col-6 text-muted">${footer}</small>
+    cardFooterTemplate.innerHTML=`<div class="row justify-content-between"> <small class="col-6 text-muted">${tags}</small>
         <div class="mr-2">
           <button class="btn btn-outline-primary py-0" onclick="editArticle('${article.id}')">Edytuj</button>
           <button class="btn btn-outline-danger py-0" onclick="deleteArticle('${article.id}','${title}')">Usuń</button>
         </div>
-      </div>`;
+      </div>
+      <small class="text-muted ">${footer}</small>`;
 
     //dodajemy do struktury strony
     cardTemplate.appendChild(cardBodyTemplate);

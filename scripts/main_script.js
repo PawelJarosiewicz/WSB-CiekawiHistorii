@@ -14,7 +14,23 @@ $(document).ready(function(){
             $('#btnLogIn').removeAttr('hidden');
           } 
           else{
-            $('#btnMnuUser').removeAttr('hidden');//pokazujemy menu usera
+            //pokazujemy menu usera
+            let btn = document.getElementById('btnMnuUser');
+            $(btn).removeAttr('hidden');
+            btn.setAttribute('data-toggle','tooltip');
+            btn.setAttribute('data-html','true');
+            btn.setAttribute('title','<h6>Cześć '+currUser.displayName+'</h6>');
+            $(btn).tooltip();
+            $('#btnMnuUser').hover(function(){
+              if($(this).hasClass('show'))  //ukrywamy tooltip gdy rozwinie się menu usera, przesłania pozycje menu
+                $(this).tooltip('hide'); 
+            });
+            $('#btnMnuUser').click(function(){
+                $(this).tooltip('hide');
+            });
+            $('#btnMnuUser a').click(function(){
+              $('#btnMnuUser').tooltip('hide');
+          });
           }
           //odczytanie listy ostatnich artykułów 
           loadLastArticles();     
@@ -40,14 +56,6 @@ $(document).ready(function(){
   if(!getCookie('cookieInfo')){
     showCookieInfo();
   }
-  //szukanie z głównego menu
-  // $('#myBtnSearch').click(startSearch);
-  // $('#inputSearch').keypress(function(event){
-  //   if(event.keyCode==13){
-  //     // event.preventDefault();
-  //     startSearch();
-  //   }
-  // });
 
   //podpowiedzi - na końcu
   $('[data-toggle="tooltip"]').tooltip();
@@ -55,22 +63,6 @@ $(document).ready(function(){
 //END READY
 
 //METODY wspólne dla całej witryny
-
-//WYSZUKIWANIE
-function startSearch(){
-  try{
-    let searchStr = $('#inputSearch').val();
-    if(searchStr.length!=0){
-      alert('/articles/?'+encodeURIComponent(searchStr))
-      // document.location.href = "/articles/?"+encodeURIComponent(searchStr);
-      window.location.href = '/articles/?'+encodeURIComponent(searchStr);
-
-    }
-  }
-  catch(err){
-    showError('Error (start search) '+err);
-  }
-}
 
 //OSTATNIE ARTYKUŁY-----------
 function loadLastArticles(){

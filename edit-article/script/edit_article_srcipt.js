@@ -130,8 +130,8 @@ $(document).ready(function(){
         let pubDate='';
         if(public.checked){
           if(currArticle){ //artykuł był publikowany -> nie zmieniamy daty
-            if(currArticle.PublicDate){
-              pubDate = currArticle.PublicDate;
+            if(currArticle.data().Public){
+              pubDate = currArticle.data().PublicDate;
             }
             else{
               pubDate = (new Date()).toISOString();
@@ -144,20 +144,28 @@ $(document).ready(function(){
         else{
           pubDate='';
         }
+        //budujemy listę haseł wg których będziemy wyszukiwać
+        let tags_lc = tags.value.toLowerCase().split(',');  //tagi
+        //usuawmy spację z obu stron tagu
+        for(i=0;i<tags_lc.length;i++){
+          tags_lc[i]=tags_lc[i].trim();
+          console.log(tags_lc[i]+' '+tags_lc[i].length)
+        }
+        tags_lc.push(currUser.displayName.toLowerCase()); //dodajemy nazwę usera
+        tags_lc.push(era.value.toLowerCase());  //dodajemy nazwę epoki
+        tags_lc = tags_lc.concat(title.value.toLowerCase().trim().split(' ')); //dodajemy tytuł
+        //budujemy strukturę artykułu
         let article={
           Title: title.value,
-          Title_lc: title.value.toLowerCase(),
           Tags: tags.value,
-          Tags_lc: tags.value.split(','),
+          Tags_lc: tags_lc,
           Era: era.value,
-          Era_lc: era.value.toLowerCase(),
           ArticleText: artText.innerHTML,
           ArticleText_lc: $(artText).text().toLowerCase(),
           Public: public.checked,
           UserId: currUser.uid,
           UserMail: currUser.email,
           UserName: currUser.displayName,
-          UserName_lc: currUser.displayName.toLowerCase(),
           PublicDate: pubDate,
           ModifyDate: (new Date()).toISOString()
         }
@@ -214,6 +222,7 @@ $(document).ready(function(){
         $('#editor').html(article.ArticleText);
         document.getElementById('artPublic').checked = article.Public;
         changeSubmitBtnInfo();
+        setDocObserver(currArticle.id);
       })
       .catch(function(error) {
         showError('Błąd wczytywania artykułu o id='+articleid,error);
@@ -229,6 +238,9 @@ $(document).ready(function(){
     if(currArticle){ //artukuł istnieje -> update
       let doc = db.collection("Articles").doc(currArticle.id);
       return doc.update(article)
+          .then(function(){ 
+            setDocObserver(currArticle.id);
+          })
           .catch(function(error) {
             currArticle=null;
             showError('Error (modify article in db): ',error);
