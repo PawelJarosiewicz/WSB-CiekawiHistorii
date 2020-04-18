@@ -106,7 +106,7 @@ function createContainerArticle(article){
     let title = article.data().Title;
 
     let articleTemplate= document.createElement('div');
-    articleTemplate.setAttribute('class','border-bottom border-dark my-3 lastArticle');
+    articleTemplate.setAttribute('class','border-bottom border-dark my-3 p-2 lastArticle');
     // articleTemplate.setAttribute('id',article.id);
     articleTemplate.innerHTML=`<h6 class="font-weight-bolder">${title}</h6><div>${articleText}</div>`;
     $(articleTemplate).click(function(){

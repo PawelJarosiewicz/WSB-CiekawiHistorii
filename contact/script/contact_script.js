@@ -52,7 +52,7 @@ function validateSendContact(e){
                 Promise.all(fetchPromises).then(()=>{
                     if(documentRef){
                         $("#m-title").html("Wiadomość przesłana");
-                        $("#m-body").html("Dziękujemy za przesłanie wiadomości.</br>Twoja wiadomości została zapiasna z identyfikatorem: "+documentRef.id);
+                        $("#m-body").html("Dziękujemy za przesłanie wiadomości.</br>Twoja wiadomość została zapisana z identyfikatorem: "+documentRef.id);
                         $("#m-OK").on('click',function(){e.target.submit();});
                         $("#modal-info").modal('show');
                         $('#btnSubmit').html('Wyślij');
