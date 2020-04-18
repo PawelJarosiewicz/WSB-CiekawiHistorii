@@ -18,7 +18,6 @@ $(document).ready(function(){
           if(s.length==2){
             searchStr = decodeURIComponent(s[1].replace(/\+/g, '%20'));  //konwertujemy na tekst to wyszukiwania
           }
-          // alert(searchStr)
         }
         else
           era='antiquity';
@@ -137,10 +136,14 @@ function searchArticlesFromDB(searchStr){
       getSearchedArticlesOnPage(1);
     })
     .catch(function(error){
+      $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+      $('#gSpinners').addClass('d-none');
       showError('Błąd wyszukiwania.',error);
     });
   }
   catch(err){
+    $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+    $('#gSpinners').addClass('d-none');
     showError('Error (search)',err);
   }
 }
@@ -176,6 +179,8 @@ function getSearchedArticlesOnPage(pageNo){
         createCardArticle(doc);
       })
       .catch(function(error){
+        $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+        $('#gSpinners').addClass('d-none');
         console.error('Error article id='+id,error);
       });
     });
@@ -218,10 +223,14 @@ function getArticlesFromDB(era){
           getArticlesOnPage(docQuery,1);
         })
         .catch(function(error){
+          $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+          $('#gSpinners').addClass('d-none');
           showError('Błąd artykuły.',error);
         });
     }
     catch(err){
+      $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+      $('#gSpinners').addClass('d-none');
       showError('Error',err);
     }
 }
@@ -258,6 +267,8 @@ function getArticlesOnPage(query,pageNo){
             createPagination(); //nawigacja na stronie
           })
           .catch(function(error){
+            $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+            $('#gSpinners').addClass('d-none');
             showError('Błąd pobierania listy artykułów.',error);
           });
         }
@@ -267,6 +278,8 @@ function getArticlesOnPage(query,pageNo){
     }
   }
   catch(err){
+    $('#gSpinners').removeClass('d-flex');  //ukrywamy animację
+    $('#gSpinners').addClass('d-none');
     showError('Error (page no '+pageNo+')',err);
   }
 }
