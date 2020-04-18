@@ -110,7 +110,8 @@ function createContainerArticle(article){
     // articleTemplate.setAttribute('id',article.id);
     articleTemplate.innerHTML=`<h6 class="font-weight-bolder">${title}</h6><div>${articleText}</div>`;
     $(articleTemplate).click(function(){
-      document.location.href="/article/#"+article.id;
+      let url_pref = $('.navbar-brand').prop('href'); //zmienna pomocnicza do uzyskania prefiksu url
+      window.location.href=url_pref.replace('index.html','')+"article/#"+article.id;
     });
     return articleTemplate;
 }
@@ -281,16 +282,17 @@ function firebaseLogInAnonymous(){
       });
 }
 function friebaseLogOut(){
-    if(currUser){
-        firebase.auth().signOut().then(function() {
-          window.location.href = '/user/login';
-          }).catch(function(error) {
-            console.error('Error during log out ',error);
-          });
-    }
-    else{
-      window.location.href = '/user/login';
-    }
+  let url_pref = $('.navbar-brand').prop('href'); //zmienna pomocnicza do uzyskania prefiksu url
+  if(currUser){
+      firebase.auth().signOut().then(function() {
+        window.location.href = url_pref.replace('index.html','')+'user/login';
+        }).catch(function(error) {
+          console.error('Error during log out ',error);
+        });
+  }
+  else{
+    window.location.href = url_pref.replace('index.html','')+'user/login';
+  }
 }
 
 //FUNKCJE DO WALIDACJI FORMULARZY

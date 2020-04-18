@@ -161,7 +161,7 @@ function validateLogIn(e){
           if($('#loginCheck').is(':checked') ){  //zapamiętujemy login jeśli zaznaczono
             setCookie('userMail',$('#loginEmail').val(),365,'/');
           }
-          window.location.href = '/user';
+          window.location.href = '../';
         }
       })
       .catch(function(error) {
@@ -182,7 +182,7 @@ function validateLogIn(e){
 
 function decodeLogInError(err){
   if(err.code=='auth/user-disabled'){
-    showError('Błąd - konto wyłączone','Twoje konto zostało zablokowane.</br>Użyj <a href="/contact">formularza kontaktowego</a> w celu odblokowania konta.');
+    showError('Błąd - konto wyłączone','Twoje konto zostało zablokowane.</br>Użyj <a href="../../contact">formularza kontaktowego</a> w celu odblokowania konta.');
   }
   else if(err.code=='auth/user-not-found'){
     showError('Błąd - konto nie istnieje','Dla podanego adres e-mail nie ma konta w naszym serwisie.');
@@ -243,7 +243,7 @@ function validateNewUser(e){
       let cu = firebase.auth().createUserWithEmailAndPassword($('#newUserEmail').val(), $('#newUserPass').val())
       .catch(function(error) {
         if(error.code=='auth/email-already-in-use'){
-          showError('Błąd - takie konto już istnieje','Istnieje już konto powiązane z podanym adresem e-mail.</br>Użyj innego adresu e-mail lub zaloguj się na podany adres e-mail.</br>Jeśli nie pamiętasz hasła to zawsze możesz je <a href="/user/reset-password">zresetować</a>.');
+          showError('Błąd - takie konto już istnieje','Istnieje już konto powiązane z podanym adresem e-mail.</br>Użyj innego adresu e-mail lub zaloguj się na podany adres e-mail.</br>Jeśli nie pamiętasz hasła to zawsze możesz je <a href="user/reset-password">zresetować</a>.');
         }
         else{
           showError('Błąd '+error.code,error.message);
@@ -264,7 +264,7 @@ function validateNewUser(e){
             $(btn).removeClass('btn-success');
           });
           fetchPromises.push(un);
-          Promise.all(fetchPromises).then(()=>{ window.location.href = '/user'; });
+          Promise.all(fetchPromises).then(()=>{ window.location.href = 'user'; });
         }
       });
     }

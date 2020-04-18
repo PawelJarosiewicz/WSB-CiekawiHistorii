@@ -1,7 +1,7 @@
 $(document).ready(function(){ 
   //wylogowanie
   $('#navLogout').click(logOut);
-  $('#navAddArticles').click(function(){document.location.href='/edit-article'});
+  $('#navAddArticles').click(function(){document.location.href='../edit-article'});
 
   //obsługa przycisków formularza usera
   $('#btnChangeName').click(function(){
@@ -35,9 +35,10 @@ $(document).ready(function(){
       if (user) {
           currUser = user;
           if(currUser.isAnonymous){ //logowanie anonimowe
-            document.location.href='/user/login';
+            window.location.href='login';
           }
           else{
+            $('.mainSection').removeAttr('hidden');
             $('#userNameSpan').text(currUser.displayName);
             $('#profileUserName').val(currUser.displayName);
             $('#profileUserEmail').val(currUser.email);
@@ -52,7 +53,7 @@ $(document).ready(function(){
                   
       } else {
           currUser=null;
-          document.location.href='/user/login';
+          window.location.href='login';
       }
     });
   //odczytanie artykułów usera
@@ -168,7 +169,7 @@ function deleteArticle(articleId, title){
 
 function editArticle(articleId){
   try{
-    document.location.href="/edit-article/#"+articleId;
+    document.location.href="../edit-article/#"+articleId;
   }
   catch(err){
     showError('Error (edit article): ',err);

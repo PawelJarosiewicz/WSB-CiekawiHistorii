@@ -380,7 +380,7 @@ function createCardArticle(article){
     document.getElementById('cardArticles').appendChild(articleTemplate);
 
     $(articleTemplate).click(function(){
-      document.location.href="/article/#"+article.id;
+      window.location.href="../article/#"+article.id;
     });
   }
   catch(err){
