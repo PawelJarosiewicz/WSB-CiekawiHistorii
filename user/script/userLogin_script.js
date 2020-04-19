@@ -264,7 +264,7 @@ function validateNewUser(e){
             $(btn).removeClass('btn-success');
           });
           fetchPromises.push(un);
-          Promise.all(fetchPromises).then(()=>{ window.location.href = 'user'; });
+          Promise.all(fetchPromises).then(()=>{ window.location.href = '../'; });
         }
       });
     }
