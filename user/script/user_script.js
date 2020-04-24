@@ -46,8 +46,11 @@ $(document).ready(function(){
 
             //przekierowanie do konkretnej zakładki
             let tab = window.location.hash;
-            if(tab){
+            if(tab=='#navArticles'){
               $(tab).click();
+            }
+            else if (tab){
+              $('#navArticles').click();  //przekazany hash to id artykułu
             }
           }
                   
@@ -91,6 +94,22 @@ function getUserArticles(){
             c++;
           });
           $('#artCount').html("Liczba artykułów: <b>"+c+"</b>");
+          //przewijamy stronę do artykułu
+          let hashId = document.location.hash;
+          if(hashId){
+            let docHash = document.getElementById(hashId.substring(1));
+            if(docHash){
+              let y = $(docHash).offset().top - $('.navbar').outerHeight() - 10;  //wyznaczamy punkt odniesienia
+              window.scrollTo({ top: y, behavior: 'smooth' });  //przewijamy
+              //delikatnie wyróżniamy kartę artykułu
+              let btnE = $(docHash).find('.btn-outline-primary');
+              $(btnE).removeClass('btn-outline-primary');
+              $(btnE).addClass('btn-primary');
+              let btnU = $(docHash).find('.btn-outline-danger');
+              $(btnU).removeClass('btn-outline-danger');
+              $(btnU).addClass('btn-danger');
+            }
+          }
         })
         .catch(function(error){
           showError('Błąd pobierania listy artykułów.',error);
@@ -113,13 +132,14 @@ function createUserCardArticle(article){
       articleText = articleText.substring(0,500)+'...';
     }
     let title = article.data().Title;
-    let footer = 'Ostatnia modyfikacja '+article.data().ModifyDate;
+    let footer = 'Ostatnia modyfikacja: '+article.data().ModifyDate;
     if(article.data().Public){
       footer=footer+'</br> Opublikowano: '+article.data().PublicDate;
     }
     let tags = "Tagi: "+article.data().Tags;
     let articleTemplate= document.createElement('div');
     articleTemplate.setAttribute('class', 'col mb-4');
+    articleTemplate.setAttribute('id', article.id);
 
     let cardTemplate = document.createElement('div');
     cardTemplate.setAttribute('class', 'card h-100 border-info');

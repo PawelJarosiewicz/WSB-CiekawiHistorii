@@ -75,6 +75,12 @@ $(document).ready(function(){
         $('#artDateInfo').html('');
         currArticle=null;
       });
+
+      $('#toUserArticles').click(function(){
+        if(currArticle){
+          window.location.href='../user/#'+currArticle.id;
+        }
+      });
   });
 
   //METODY-----------
@@ -276,6 +282,7 @@ function setDocObserver(docId){
         dateInfo='Data modyfikacji: '+currArticle.data().ModifyDate;
       }
       $('#artDateInfo').html(dateInfo);
+      $('#toUserArticles').removeAttr('hidden');
     });
   }
   catch(err){
