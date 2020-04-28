@@ -108,6 +108,7 @@ function getUserArticles(){
               let btnU = $(docHash).find('.btn-outline-danger');
               $(btnU).removeClass('btn-outline-danger');
               $(btnU).addClass('btn-danger');
+              $(docHash).find('.card').css('border-width','3px');
             }
           }
         })
